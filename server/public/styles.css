@@ -1,4 +1,26 @@
+/* colors */
 .black {
   background-color: black;
-  height: 100vh;
+}
+
+.purple {
+  background-color: #4717f6;
+}
+
+/* colors */
+
+* {
+  font-family: Comfortaa, sans-serif;
+}
+
+.sans-serif {
+  font-family: sans-serif;
+}
+
+.rounded-border {
+  border-radius: 5px;
+}
+
+.h-15 {
+  height: 15%;
 }

@@ -35,7 +35,7 @@ export default class App extends React.Component {
   render() {
     // console.log('app state:', this.state);
     return ( // nav component is inserted here so that it  appears in every other component
-      <div className='container-fluid black text-white'>
+      <div className='container-fluid black vh-100 text-white'>
         <Nav />
         {this.renderPage()}
       </div>
