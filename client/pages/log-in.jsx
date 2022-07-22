@@ -3,7 +3,7 @@ import React from 'react';
 class LogIn extends React.Component {
   render() {
     return (
-      <div className='d-flex justify-content-center text-center h-75'>
+      <div className='d-flex justify-content-center align-items-center text-center h-75'>
         <div className='flex-column w-25 justify-content-evenly h-75'>
 
           <h1>Log in</h1>
