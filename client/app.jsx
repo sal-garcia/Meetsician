@@ -4,6 +4,7 @@ import Home from './pages/home';
 import LogIn from './pages/log-in';
 import Nav from './components/nav';
 import NotFound from './pages/not-found';
+import SignUp from './pages/sign-up';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -29,6 +30,10 @@ export default class App extends React.Component {
     if (route.path === 'log-in') {
       return <LogIn />;
     }
+    if (route.path === 'sign-up') {
+      return <SignUp />;
+    }
+
     return <NotFound />;
   }
 
