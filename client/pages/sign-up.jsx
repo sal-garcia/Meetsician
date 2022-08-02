@@ -4,13 +4,14 @@ class SignUp extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: '',
-      instrument: '',
-      location: '',
+      name: 'name',
+      instrument: 'test',
+      location: 'usa,state,city',
       errorLocation: false,
-      about: '',
-      password: '',
-      email: ''
+      about: 'test',
+      password: 'password',
+      email: 'fakemail1@gmail.com',
+      photoUrl: 'test'
     };
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
@@ -50,6 +51,23 @@ class SignUp extends React.Component {
       return;
     }
     this.setState({ errorLocation: false });
+    fetch('/api/user_create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: this.state.name,
+        instrument: this.state.instrument,
+        country: locationSplit[0],
+        state: locationSplit[1],
+        city: locationSplit[2],
+        about: this.state.about,
+        email: this.state.email,
+        hashedPassword: this.state.password,
+        photoUrl: this.state.photoUrl
+      })
+    });
   }
 
   render() {
@@ -60,7 +78,7 @@ class SignUp extends React.Component {
 
           <h1>Create an Account</h1>
 
-          <form className='flex-column d-flex justify-content-evenly h-100' action="" onSubmit={this.onSubmit}>
+          <form className='flex-column d-flex justify-content-evenly h-100' action="/user_create" method="POST" onSubmit={this.onSubmit}>
 
             <input className='rounded-border h-15' type="text" placeholder='name' required value={this.state.name} onChange={this.onChangeName}/>
 
