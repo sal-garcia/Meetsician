@@ -37,7 +37,7 @@ app.get('/api/users', (req, res, next) => {
 
 app.post('/api/user_create', (req, res, next) => {
   const { name, instrument, country, state, city, about, email, hashedPassword, photoUrl } = req.body;
-  // console.log(req.body);
+  // console.log(email);
   const sql =
      `insert into users(name, instrument, country, state, city, about, email, hashed_password, photo_url)
     values($1,$2,$3,$4,$5,$6,$7,$8,$9)`
@@ -49,7 +49,8 @@ app.post('/api/user_create', (req, res, next) => {
     .then(results => {
       res.json(results.rows);
       res.end();
-    });
+    })
+    .catch(err => next(err));
 
 });
 

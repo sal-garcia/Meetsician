@@ -27,3 +27,15 @@
 }
 
 /* log in page */
+.width-test {
+  width: 25%;
+}
+
+/* phone view */
+@media screen and (max-width: 391px) {
+  .width-test {
+    width: 50%;
+  }
+}
+
+/* phone view */

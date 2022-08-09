@@ -4,17 +4,21 @@ class SignUp extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: 'name',
-      instrument: 'test',
-      location: 'usa,state,city',
+      name: '',
+      instrument: '',
+      location: '',
       errorLocation: false,
-      about: 'test',
-      password: 'password',
-      email: 'fakemail1@gmail.com',
-      photoUrl: 'test'
+      about: '',
+      password: '',
+      email: '',
+      photoUrl: ''
     };
     this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeInstrument = this.onChangeInstrument.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
+    this.onChangeAbout = this.onChangeAbout.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
   }
@@ -67,14 +71,25 @@ class SignUp extends React.Component {
         hashedPassword: this.state.password,
         photoUrl: this.state.photoUrl
       })
-    });
+    })
+      .then(res => res.json())
+      .then(data => this.setState({
+        name: '',
+        instrument: '',
+        location: '',
+        errorLocation: false,
+        about: '',
+        password: '',
+        email: '',
+        photoUrl: ''
+      }));
   }
 
   render() {
 
     return (
       <div className='d-flex justify-content-center align-items-center text-center h-75'>
-        <div className='flex-column w-25 justify-content-evenly h-75'>
+        <div className='flex-column width-test justify-content-evenly h-75'>
 
           <h1>Create an Account</h1>
 
@@ -82,17 +97,18 @@ class SignUp extends React.Component {
 
             <input className='rounded-border h-15' type="text" placeholder='name' required value={this.state.name} onChange={this.onChangeName}/>
 
-            <input className='rounded-border h-15' type="text" placeholder='instrument' required/>
+            <input className='rounded-border h-15' type="text" placeholder='instrument' required value={this.state.value} onChange={this.onChangeInstrument}/>
 
             <input className='rounded-border h-15' type="text" placeholder='country, state, city' required value={this.state.location} onChange={this.onChangeLocation}/>
               {this.state.errorLocation && <p className='text-danger'>error , needed after each location</p>}
-            <textarea name="user-info" className='rounded-border h-25' maxLength="200" placeholder='about' required></textarea>
 
-            <input className='rounded-border h-15' type="password" placeholder='password' required/>
+            <textarea name="user-info" className='rounded-border h-25' maxLength="200" placeholder='about' required value={this.state.about} onChange={this.onChangeAbout}></textarea>
 
-            <input className='rounded-border h-15' type="email" placeholder='email' required/>
+            <input className='rounded-border h-15' type="password" placeholder='password' required value={this.state.password} onChange={this.onChangePassword}/>
 
-            <button className='purple text-white sans-serif rounded-border h-15' type="submit">LOG IN</button>
+            <input className='rounded-border h-15' type="email" placeholder='email' required value={this.state.email} onChange={this.onChangeEmail}/>
+
+            <button className='purple text-white sans-serif rounded-border h-15' type="submit" onSubmit={this.onSubmit}>LOG IN</button>
 
           </form>
         </div>
