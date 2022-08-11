@@ -1,0 +1,41 @@
+/* colors */
+.black {
+  background-color: black;
+}
+
+.purple {
+  background-color: #4717f6;
+}
+
+/* colors */
+
+* {
+  font-family: Comfortaa, sans-serif;
+}
+
+.sans-serif {
+  font-family: sans-serif;
+}
+
+/* log in page */
+.rounded-border {
+  border-radius: 5px;
+}
+
+.h-15 {
+  height: 15%;
+}
+
+/* log in page */
+.width-test {
+  width: 25%;
+}
+
+/* phone view */
+@media screen and (max-width: 391px) {
+  .width-test {
+    width: 50%;
+  }
+}
+
+/* phone view */
