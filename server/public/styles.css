@@ -50,3 +50,10 @@
 }
 
 /* custom width */
+
+/* custom flex */
+.row {
+  display: flex;
+}
+
+/* custom flex */

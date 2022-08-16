@@ -35,7 +35,7 @@ class MscnSearch extends React.Component {
 <div className='text-center flex-column'>
   <h1>These are the musicians in your area</h1>
 </div>
-        <div className='d-flex justify-content-around align-content-around h-75'>
+        <div className='row justify-content-around align-content-around h-75'>
 
   <div className='d-flex flex-column justify-content-around mt-5 text-center h-75 w-15 align-items-center'>
     <div>
