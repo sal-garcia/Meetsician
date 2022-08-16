@@ -17,16 +17,24 @@ app.use(express.json());// json middleware
 
 app.get('/api/users', (req, res, next) => {
   // const userId = req.users.userId; when user auth is set up
-  const userId = 1;
+  const country = req.query.country;
+  const state = req.query.state;
+  const city = req.query.city;
+  // console.log(country);
   const sql = `
   select *
   from
   "users"
   where
-  "userId" =$1
+
+  "country" =$1 and
+  "state" =$2 and
+  "city" =$3
+
+
   `;
 
-  const params = [userId];
+  const params = [country, state, city];
 
   db.query(sql, params)
     .then(results => {
@@ -34,6 +42,26 @@ app.get('/api/users', (req, res, next) => {
     })
     .catch(err => next(err));
 });
+
+// // app.get('/api/users/location', (req, res, next) => {
+// //   // const userId = req.users.userId; when user auth is set up
+// //   const userId = 1;
+// //   const sql = `
+// //   select *
+// //   from
+// //   "location"
+// //   where
+// //   "userId" =$1
+// //   `;
+
+// //   const params = [userId];
+
+// //   db.query(sql, params)
+// //     .then(results => {
+// //       res.json(results.rows);
+//     })
+//     .catch(err => next(err));
+// });
 
 app.post('/api/user_create', (req, res, next) => {
   const { name, instrument, country, state, city, about, email, hashedPassword, photoUrl } = req.body;

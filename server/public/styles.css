@@ -7,6 +7,10 @@
   background-color: #4717f6;
 }
 
+.beige {
+  background-color: #e5e5e5;
+}
+
 /* colors */
 
 * {
@@ -39,3 +43,10 @@
 }
 
 /* phone view */
+
+/* custom width */
+.w-15 {
+  width: 15%;
+}
+
+/* custom width */

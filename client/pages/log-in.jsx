@@ -1,6 +1,12 @@
 import React from 'react';
 
 class LogIn extends React.Component {
+
+  onSubmit(e) {
+    e.preventDefault();
+    window.location.assign('/#musician-search');
+  }
+
   render() {
     return (
       <div className='d-flex justify-content-center align-items-center text-center h-75'>
@@ -8,7 +14,7 @@ class LogIn extends React.Component {
 
           <h1>Log in</h1>
 
-          <form className='flex-column d-flex justify-content-evenly h-75' action="">
+          <form className='flex-column d-flex justify-content-evenly h-75' onSubmit={this.onSubmit} action="">
 
             <input className='rounded-border h-15' type="email" />
 
