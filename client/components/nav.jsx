@@ -10,7 +10,7 @@ function Nav() {
         <a className='nav-link link-light' href="#log-in">Log In</a>
       </li>
       <li className='nav-item'>
-        <a className='nav-link link-light' href="#">Home</a>
+        <a className='nav-link link-light' href="#musician-search">test</a>
       </li>
     </ul>
   );
