@@ -1,8 +1,9 @@
 import React from 'react';
 import { parseRoute } from './lib';
-// import Home from './pages/home';
+import Home from './pages/home';
 import LogIn from './pages/log-in';
-import MscnSearch from './pages/mscn-search';
+import Menu from './pages/menu';
+// import MscnSearch from './pages/mscn-search';
 import Nav from './components/nav';
 import NotFound from './pages/not-found';
 import SignUp from './pages/sign-up';
@@ -25,14 +26,17 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-    if (route.path === 'musician-search') {
-      return <MscnSearch />;
+    if (route.path === 'home') {
+      return <Home />;
     }
     if (route.path === 'log-in') {
       return <LogIn />;
     }
     if (route.path === 'sign-up') {
       return <SignUp />;
+    }
+    if (route.path === 'menu') {
+      return <Menu />;
     }
 
     return <NotFound />;
