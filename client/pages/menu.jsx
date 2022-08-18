@@ -1,6 +1,11 @@
 import React from 'react';
 
 class Menu extends React.Component {
+
+  findMusician(e) {
+    window.location.assign('/#mus-location');
+  }
+
   render() {
     return (
       <div className='d-flex justify-content-center align-items-center text-center h-75'>
@@ -8,13 +13,13 @@ class Menu extends React.Component {
 
           <h1>Home</h1>
 
-          <div className='flex-column d-flex justify-content-evenly h-75' onSubmit={this.onSubmit} action="">
+          <div className='flex-column d-flex justify-content-evenly h-75' action="">
 
-            <button className='purple text-white sans-serif rounded-border h-15' type="submit">FIND MUSICIAN</button>
+            <button className='purple text-white sans-serif rounded-border h-15' onClick={this.findMusician}>FIND MUSICIAN</button>
 
-            <button className='purple text-white sans-serif rounded-border h-15' type="submit">MY MUSICIAN</button>
+            <button className='purple text-white sans-serif rounded-border h-15'>MY MUSICIAN</button>
 
-            <button className='purple text-white sans-serif rounded-border h-15' type="submit">MY ACCOUNT</button>
+            <button className='purple text-white sans-serif rounded-border h-15'>MY ACCOUNT</button>
 
           </div>
         </div>

@@ -3,7 +3,8 @@ import { parseRoute } from './lib';
 import Home from './pages/home';
 import LogIn from './pages/log-in';
 import Menu from './pages/menu';
-// import MscnSearch from './pages/mscn-search';
+import MusAvail from './pages/mus-Avail';
+import MusLocation from './pages/mus-location';
 import Nav from './components/nav';
 import NotFound from './pages/not-found';
 import SignUp from './pages/sign-up';
@@ -37,6 +38,12 @@ export default class App extends React.Component {
     }
     if (route.path === 'menu') {
       return <Menu />;
+    }
+    if (route.path === 'mus-location') {
+      return <MusLocation />;
+    }
+    if (route.path === 'mus-available') {
+      return <MusAvail />;
     }
 
     return <NotFound />;

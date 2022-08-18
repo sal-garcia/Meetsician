@@ -1,6 +1,6 @@
 import React from 'react';
 
-class MscnSearch extends React.Component {
+class MusAvail extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -93,4 +93,4 @@ class MscnSearch extends React.Component {
   }
 }
 
-export default MscnSearch;
+export default MusAvail;
