@@ -40,6 +40,11 @@
   .width-test {
     width: 50%;
   }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* phone view */
@@ -47,6 +52,10 @@
 /* custom width */
 .w-15 {
   width: 15%;
+}
+
+.w-180px {
+  width: 180px;
 }
 
 /* custom width */

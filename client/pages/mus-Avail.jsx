@@ -22,26 +22,27 @@ class MusAvail extends React.Component {
     fetch(`/api/users?country=${blah}&state=${blah2}&city=${blah3}`);
   }
 
-  musicianSelection(e) {
-    // if (instrument === 'Guitar') {
-    //   return 'something';
-    // }
-  }
+  // musicianSelection(e) {
+  //   // if (instrument === 'Guitar') {
+  //   //   return 'something';
+  //   // }
+  // }
 
   render() {
     return (
-<>
+<div>
 
 <div className='text-center flex-column'>
   <h1>These are the musicians in your area</h1>
 </div>
-        <div className='row justify-content-around align-content-around h-75'>
+
+        <div className='row justify-content-around align-content-around h-75 black'>
 
   <div className='d-flex flex-column justify-content-around mt-5 text-center h-75 w-15 align-items-center'>
     <div>
        <h1>0</h1>
     </div>
-    <div className='w-75 h-50 beige d-flex align-items-center justify-content-center'>
+    <div className='w-180px h-50 beige d-flex align-items-center justify-content-center'>
               <i className="fa-solid text-dark fa-8x fa-guitar"></i>
     </div>
     <div>
@@ -53,7 +54,7 @@ class MusAvail extends React.Component {
     <div>
        <h1>0</h1>
     </div>
-    <div className='w-75 h-50 beige d-flex align-items-center justify-content-center'>
+    <div className='w-180px h-50 beige d-flex align-items-center justify-content-center'>
               <i className="fa-solid text-dark fa-8x fa-microphone"></i>
     </div>
     <div>
@@ -65,7 +66,7 @@ class MusAvail extends React.Component {
     <div>
       <h1>0</h1>
     </div>
-    <div className='w-75 h-50 beige d-flex align-items-center justify-content-center'>
+    <div className='w-180px h-50 beige d-flex align-items-center justify-content-center'>
       <i className="fa-solid text-dark fa-8x fa-drum"></i>
     </div>
     <div>
@@ -77,7 +78,7 @@ class MusAvail extends React.Component {
     <div>
        <h1>0</h1>
     </div>
-    <div className='w-75 h-50 beige d-flex align-items-center justify-content-center'>
+    <div className='w-180px h-50 beige d-flex align-items-center justify-content-center'>
               <i className="fa-solid text-dark fa-8x fa-guitar"></i>
 
     </div>
@@ -87,7 +88,8 @@ class MusAvail extends React.Component {
   </div>
 
   </div>
-      </>
+
+  </div>
 
     );
   }
