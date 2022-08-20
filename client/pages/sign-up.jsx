@@ -9,7 +9,6 @@ class SignUp extends React.Component {
       country: '',
       state: '',
       city: '',
-      errorLocation: false,
       about: '',
       password: '',
       email: '',
@@ -91,7 +90,6 @@ class SignUp extends React.Component {
         country: '',
         state: '',
         city: '',
-        errorLocation: false,
         about: '',
         password: '',
         email: '',
@@ -111,15 +109,25 @@ class SignUp extends React.Component {
 
             <input className='rounded-border h-15' type="text" placeholder='name' required value={this.state.name} onChange={this.onChangeName}/>
 
-            <input className='rounded-border h-15' type="text" placeholder='instrument' required value={this.state.instrument} onChange={this.onChangeInstrument}/>
+            {/* <input className='rounded-border h-15' type="instr" placeholder='instrument' required value={this.state.instrument} onChange={this.onChangeInstrument}/> */}
 
             <span className='d-flex'>
-              <select className='rounded-border w-33' type="email" name='countries' defaultValue='country' required onChange={this.onChangeCountry}>
-                {/* <option value="" disabled selected>Select Country</option> */}
+              <select className='rounded-borders w-100' name="instruments" defaultValue='' required onChange={this.onChangeInstrument}>
+              <option value="" disabled selected hidden>instrument</option>
+              <option value="guitar">guitar</option>
+              <option value="drums">drums</option>
+              <option value="bass">bass</option>
+              <option value="vocals">vocals</option>
+              </select>
+            </span>
+
+            <span className='d-flex'>
+              <select className='rounded-border w-33' name='countries' required onChange={this.onChangeCountry}>
+                <option value="" disabled selected hidden>Country</option>
                 <option value="USA">USA</option>
               </select>
-              <select className='rounded-border w-33' type="email" name='countries' defaultValue='State' required onChange={this.onChangeState}>
-              {/* <option value="st" disabled selected>Select State</option> */}
+              <select className='rounded-border w-33' name='states' required onChange={this.onChangeState}>
+              <option value="" disabled selected hidden>State</option>
               <option value="AL">Alabama</option>
               <option value="AK">Alaska</option>
               <option value="AZ">Arizona</option>
