@@ -6,7 +6,9 @@ class SignUp extends React.Component {
     this.state = {
       name: '',
       instrument: '',
-      location: '',
+      country: '',
+      state: '',
+      city: '',
       errorLocation: false,
       about: '',
       password: '',
@@ -15,7 +17,9 @@ class SignUp extends React.Component {
     };
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeInstrument = this.onChangeInstrument.bind(this);
-    this.onChangeLocation = this.onChangeLocation.bind(this);
+    this.onChangeCountry = this.onChangeCountry.bind(this);
+    this.onChangeState = this.onChangeState.bind(this);
+    this.onChangeCity = this.onChangeCity.bind(this);
     this.onChangeAbout = this.onChangeAbout.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -31,8 +35,16 @@ class SignUp extends React.Component {
     this.setState({ instrument: e.target.value });
   }
 
-  onChangeLocation(e) {
-    this.setState({ location: e.target.value });
+  onChangeCountry(e) {
+    this.setState({ country: e.target.value });
+  }
+
+  onChangeState(e) {
+    this.setState({ state: e.target.value });
+  }
+
+  onChangeCity(e) {
+    this.setState({ city: e.target.value });
   }
 
   onChangeAbout(e) {
@@ -49,11 +61,11 @@ class SignUp extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const locationSplit = this.state.location.split(',');
-    if (locationSplit.length !== 3) {
-      this.setState({ errorLocation: true });
-      return;
-    }
+    // const locationSplit = this.state.location.split(',');
+    // if (locationSplit.length !== 3) {
+    //   this.setState({ errorLocation: true });
+    //   return;
+    // }
     this.setState({ errorLocation: false });
     fetch('/api/user_create', {
       method: 'POST',
@@ -63,9 +75,9 @@ class SignUp extends React.Component {
       body: JSON.stringify({
         name: this.state.name,
         instrument: this.state.instrument,
-        country: locationSplit[0],
-        state: locationSplit[1],
-        city: locationSplit[2],
+        country: this.state.country,
+        state: this.state.state,
+        city: this.state.city,
         about: this.state.about,
         email: this.state.email,
         hashedPassword: this.state.password,
@@ -76,7 +88,9 @@ class SignUp extends React.Component {
       .then(data => this.setState({
         name: '',
         instrument: '',
-        location: '',
+        country: '',
+        state: '',
+        city: '',
         errorLocation: false,
         about: '',
         password: '',
@@ -97,10 +111,71 @@ class SignUp extends React.Component {
 
             <input className='rounded-border h-15' type="text" placeholder='name' required value={this.state.name} onChange={this.onChangeName}/>
 
-            <input className='rounded-border h-15' type="text" placeholder='instrument' required value={this.state.value} onChange={this.onChangeInstrument}/>
+            <input className='rounded-border h-15' type="text" placeholder='instrument' required value={this.state.instrument} onChange={this.onChangeInstrument}/>
 
-            <input className='rounded-border h-15' type="text" placeholder='country, state, city' required value={this.state.location} onChange={this.onChangeLocation}/>
-              {this.state.errorLocation && <p className='text-danger'>error , needed after each location</p>}
+            <span className='d-flex'>
+              <select className='rounded-border w-33' type="email" name='countries' defaultValue='country' required onChange={this.onChangeCountry}>
+                {/* <option value="" disabled selected>Select Country</option> */}
+                <option value="USA">USA</option>
+              </select>
+              <select className='rounded-border w-33' type="email" name='countries' defaultValue='State' required onChange={this.onChangeState}>
+              {/* <option value="st" disabled selected>Select State</option> */}
+              <option value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option value="AZ">Arizona</option>
+              <option value="AR">Arkansas</option>
+              <option value="CA">California</option>
+              <option value="CO">Colorado</option>
+              <option value="CT">Connecticut</option>
+              <option value="DE">Delaware</option>
+              <option value="DC">District Of Columbia</option>
+              <option value="FL">Florida</option>
+              <option value="GA">Georgia</option>
+              <option value="HI">Hawaii</option>
+              <option value="ID">Idaho</option>
+              <option value="IL">Illinois</option>
+              <option value="IN">Indiana</option>
+              <option value="IA">Iowa</option>
+              <option value="KS">Kansas</option>
+              <option value="KY">Kentucky</option>
+              <option value="LA">Louisiana</option>
+              <option value="ME">Maine</option>
+              <option value="MD">Maryland</option>
+              <option value="MA">Massachusetts</option>
+              <option value="MI">Michigan</option>
+              <option value="MN">Minnesota</option>
+              <option value="MS">Mississippi</option>
+              <option value="MO">Missouri</option>
+              <option value="MT">Montana</option>
+              <option value="NE">Nebraska</option>
+              <option value="NV">Nevada</option>
+              <option value="NH">New Hampshire</option>
+              <option value="NJ">New Jersey</option>
+              <option value="NM">New Mexico</option>
+              <option value="NY">New York</option>
+              <option value="NC">North Carolina</option>
+              <option value="ND">North Dakota</option>
+              <option value="OH">Ohio</option>
+              <option value="OK">Oklahoma</option>
+              <option value="OR">Oregon</option>
+              <option value="PA">Pennsylvania</option>
+              <option value="RI">Rhode Island</option>
+              <option value="SC">South Carolina</option>
+              <option value="SD">South Dakota</option>
+              <option value="TN">Tennessee</option>
+              <option value="TX">Texas</option>
+              <option value="UT">Utah</option>
+              <option value="VT">Vermont</option>
+              <option value="VA">Virginia</option>
+              <option value="WA">Washington</option>
+              <option value="WV">West Virginia</option>
+              <option value="WI">Wisconsin</option>
+              <option value="WY">Wyoming</option>
+            </select>
+            <input type="text" className='w-33 rounded-border' placeholder='City Full Name' onChange={this.onChangeCity}/>
+            </span>
+            {/* <input className='rounded-border h-15' type="text" placeholder='country, state, city' required value={this.state.location} onChange={this.onChangeLocation}/>
+              {this.state.errorLocation && <p className='text-danger'>error , needed after each location</p>} */}
 
             <textarea name="user-info" className='rounded-border h-25' maxLength="200" placeholder='about' required value={this.state.about} onChange={this.onChangeAbout}></textarea>
 

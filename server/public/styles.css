@@ -54,6 +54,10 @@
   width: 15%;
 }
 
+.w-33 {
+  width: 33%;
+}
+
 .w-180px {
   width: 180px;
 }
@@ -66,3 +70,10 @@
 }
 
 /* custom flex */
+::placeholder {
+  font-size: small;
+}
+
+select {
+  font-size: small;
+}

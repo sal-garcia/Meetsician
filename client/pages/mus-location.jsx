@@ -25,13 +25,13 @@ class MusLocation extends React.Component {
           <form className='flex-column d-flex justify-content-evenly h-75' onSubmit={this.onSubmit} action="">
 
             <select className='rounded-border h-15' type="email" name='countries' required>
-              <option value="" disabled selected>Select Country</option>
+              {/* <option value="" disabled selected>Select Country</option> */}
               <option value="USA">USA</option>
 
             </select>
 
             <select className='rounded-border h-15' type="email" name='countries' required>
-              <option value="" disabled selected>Select State</option>
+              {/* <option value="" className='h1' disabled selected>Select State</option> */}
               <option value="AL">Alabama</option>
               <option value="AK">Alaska</option>
               <option value="AZ">Arizona</option>
