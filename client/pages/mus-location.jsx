@@ -5,10 +5,17 @@ class MusLocation extends React.Component {
   //   super(props);
 
   //   this.state = {
-  //     CA: false,
-  //     USA: false,
-  //     MEX: false
+  //     guitar: 0,
+  //     bass: 0,
+  //     drum: 0,
+  //     vocal:0
   //   };
+  // }
+
+  // musicianSelection(e) {
+  //   // if (country === ||state||city|| instrument) {
+  //   //   increment++ whatever instrument';
+  //   // }
   // }
 
   loginClicked(e) {

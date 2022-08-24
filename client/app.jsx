@@ -45,6 +45,9 @@ export default class App extends React.Component {
     if (route.path === 'mus-available') {
       return <MusAvail />;
     }
+    if (route.path === 'login') {
+      return <LogIn />;
+    }
 
     return <NotFound />;
   }

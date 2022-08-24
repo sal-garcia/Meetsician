@@ -95,6 +95,8 @@ class SignUp extends React.Component {
         email: '',
         photoUrl: ''
       }));
+
+    window.location.assign('/#login');
   }
 
   render() {

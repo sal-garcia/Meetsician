@@ -4,10 +4,10 @@ class MusAvail extends React.Component {
   constructor() {
     super();
     this.state = {
-      Guitar: { amount: 0 },
-      Drums: { amount: 0 },
-      Bass: { amount: 0 },
-      Vocals: { amount: 0 }
+      Guitar: 0,
+      Drums: 0,
+      Bass: 0,
+      Vocals: 0
 
     };
     // this.onLoad = this.onLoad.bind(this);
@@ -23,7 +23,7 @@ class MusAvail extends React.Component {
   }
 
   // musicianSelection(e) {
-  //   // if (instrument === 'Guitar') {
+  //   // if (country === ||state||city) {
   //   //   return 'something';
   //   // }
   // }
