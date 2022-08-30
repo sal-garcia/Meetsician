@@ -1,16 +1,21 @@
 import React from 'react';
 
 class MusLocation extends React.Component {
-  // constructor(props) {
-  //   super(props);
+  constructor(props) {
+    super(props);
 
-  //   this.state = {
-  //     guitar: 0,
-  //     bass: 0,
-  //     drum: 0,
-  //     vocal:0
-  //   };
-  // }
+    this.state = {
+      guitar: 0,
+      bass: 0,
+      drum: 0,
+      vocal: 0,
+      country: 'USA',
+      state: 'Alabama'
+      // city: 'City'
+    };
+    this.loginClicked = this.loginClicked.bind(this);
+    this.handleChangeState = this.handleChangeState.bind(this);
+  }
 
   // musicianSelection(e) {
   //   // if (country === ||state||city|| instrument) {
@@ -18,7 +23,54 @@ class MusLocation extends React.Component {
   //   // }
   // }
 
+  handleChangeCountry(e) {
+
+    this.setState({ country: e.target.value });
+  }
+
+  handleChangeState(e) {
+
+    this.setState({ state: e.target.value });
+  }
+
+  handleChangeCity(e) {
+
+    this.setState({ city: e.target.value });
+  }
+
+  componentDidMount(e) {
+    // let blah;
+    // const blah2 = 'ca';
+    // const blah3 = 'la';
+
+    // fetch(`/api/users?country=${blah}&state=${blah2}&city=${blah3}`)
+    //   .then(response => response.json())
+    //   .then(data => console.log(blah));
+  }
+
   loginClicked(e) {
+    e.preventDefault();
+    // console.log(this.props);
+
+    // console.log(this.state.country);
+    // console.log(this.state.state);
+    fetch(`/api/users?country=${this.state.country}&state=${this.state.state}&city=${this.state.city}`)
+      .then(response => response.json())
+      .then(data => {
+        // console.log(data);
+        this.props.updateMusician({
+          guitar: 1,
+          bass: 3,
+          drum: 2,
+          vocal: 5
+        });
+      });
+    // this.props.updateMusician({
+    //   guitar: 1,
+    //   bass: 3,
+    //   drum: 2,
+    //   vocal: 5
+    // });
     window.location.assign('/#mus-available');
   }
 
@@ -29,16 +81,16 @@ class MusLocation extends React.Component {
 
           <h1>Where are you looking for musicians?</h1>
 
-          <form className='flex-column d-flex justify-content-evenly h-75' onSubmit={this.onSubmit} action="">
+          <form className='flex-column d-flex justify-content-evenly h-75' onSubmit={this.loginClicked}>
 
-            <select className='rounded-border h-15' type="email" name='countries' required>
-              {/* <option value="" disabled selected>Select Country</option> */}
+            <select className='rounded-border h-15' type="email" name='countries' required onChange={this.handleChangeCountry}>
+              <option value="DEFAULT" disabled>Select Country</option>
               <option value="USA">USA</option>
 
             </select>
 
-            <select className='rounded-border h-15' type="email" name='countries' required>
-              {/* <option value="" className='h1' disabled selected>Select State</option> */}
+            <select className='rounded-border h-15' type="email" name='countries' required onChange={this.handleChangeState}>
+              <option value="DEFAULT" disabled>Select State</option>
               <option value="AL">Alabama</option>
               <option value="AK">Alaska</option>
               <option value="AZ">Arizona</option>
@@ -92,9 +144,9 @@ class MusLocation extends React.Component {
               <option value="WY">Wyoming</option>
             </select>
 
-            <input className='rounded-border h-15' type="text" placeholder='City full name, Ex: Los Angeles' required/>
+            <input className='rounded-border h-15' type="text" placeholder='City full name, Ex: Los Angeles' required onChange={this.handleChangeCity}/>
 
-            <button className='purple text-white sans-serif rounded-border h-15' type="submit" onClick={this.loginClicked}>LOG IN</button>
+            <button className='purple text-white sans-serif rounded-border h-15' type="submit">LOG IN</button>
 
           </form>
         </div>

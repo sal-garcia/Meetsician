@@ -14,8 +14,19 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      route: parseRoute(location.hash)
+      route: parseRoute(location.hash),
+      musLocation: {
+        guitar: 0,
+        bass: 0,
+        drum: 0,
+        vocal: 0
+      }
     };
+    this.updateMusician = this.updateMusician.bind(this);
+  }
+
+  updateMusician(newLocation) {
+    this.setState({ musLocation: newLocation });
   }
 
   componentDidMount() { // updates the url hash
@@ -40,10 +51,10 @@ export default class App extends React.Component {
       return <Menu />;
     }
     if (route.path === 'mus-location') {
-      return <MusLocation />;
+      return <MusLocation updateMusician={this.updateMusician} />;// passing method to muslocation so that muslocation can update number of musicians
     }
     if (route.path === 'mus-available') {
-      return <MusAvail />;
+      return <MusAvail musLocation={this.state.musLocation} />;
     }
     if (route.path === 'login') {
       return <LogIn />;
