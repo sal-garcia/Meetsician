@@ -17,7 +17,7 @@ app.use(express.json());// json middleware
 
 app.get('/api/users', (req, res, next) => {
   // const userId = req.users.userId; when user auth is set up
-  const country = req.query.country;
+  const country = req.query.country;// coming from the fetch query "?"
   const state = req.query.state;
   const city = req.query.city;
   // console.log(country);
@@ -30,14 +30,13 @@ app.get('/api/users', (req, res, next) => {
   "country" =$1 and
   "state" =$2 and
   "city" =$3
-
-
   `;
 
   const params = [country, state, city];
 
   db.query(sql, params)
     .then(results => {
+      // console.log(results.rows);
       res.json(results.rows);
     })
     .catch(err => next(err));

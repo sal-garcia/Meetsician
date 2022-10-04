@@ -4,29 +4,14 @@ class MusAvail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Guitar: props.musLocation.guitar,
-      Drums: props.musLocation.drum,
-      Bass: props.musLocation.bass,
-      Vocals: props.musLocation.vocal
+      Guitar: props.musicians.guitar,
+      Drums: props.musicians.drums,
+      Bass: props.musicians.bass,
+      Vocals: props.musicians.vocal
 
     };
-    // this.onLoad = this.onLoad.bind(this);
 
   }
-
-  // componentDidMount() {
-  //   const blah = 'usa';
-  //   const blah2 = 'ca';
-  //   const blah3 = 'la';
-
-  //   fetch(`/api/users?country=${blah}&state=${blah2}&city=${blah3}`);
-  // }
-
-  // musicianSelection(e) {
-  //   // if (country === ||state||city) {
-  //   //   return 'something';
-  //   // }
-  // }
 
   render() {
     return (

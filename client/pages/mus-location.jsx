@@ -10,18 +10,14 @@ class MusLocation extends React.Component {
       drum: 0,
       vocal: 0,
       country: 'USA',
-      state: 'Alabama'
-      // city: 'City'
+      state: 'AL',
+      city: null
     };
     this.loginClicked = this.loginClicked.bind(this);
     this.handleChangeState = this.handleChangeState.bind(this);
+    this.handleChangeCity = this.handleChangeCity.bind(this);
+    this.countOfIntruments = this.countOfIntruments.bind(this);
   }
-
-  // musicianSelection(e) {
-  //   // if (country === ||state||city|| instrument) {
-  //   //   increment++ whatever instrument';
-  //   // }
-  // }
 
   handleChangeCountry(e) {
 
@@ -38,14 +34,17 @@ class MusLocation extends React.Component {
     this.setState({ city: e.target.value });
   }
 
-  componentDidMount(e) {
-    // let blah;
-    // const blah2 = 'ca';
-    // const blah3 = 'la';
-
-    // fetch(`/api/users?country=${blah}&state=${blah2}&city=${blah3}`)
-    //   .then(response => response.json())
-    //   .then(data => console.log(blah));
+  countOfIntruments(arrayData) {
+    const instruments = {
+      guitar: 0,
+      bass: 0,
+      drums: 0,
+      vocals: 0
+    };
+    for (const element of arrayData) {
+      const instrument = element.instrument;
+      instruments[instrument] += 1;
+    } return instruments;
   }
 
   loginClicked(e) {
@@ -54,23 +53,18 @@ class MusLocation extends React.Component {
 
     // console.log(this.state.country);
     // console.log(this.state.state);
+    // console.log(this.state.city);
+    // console.log(this.state.guitar);
+
     fetch(`/api/users?country=${this.state.country}&state=${this.state.state}&city=${this.state.city}`)
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
-        this.props.updateMusician({
-          guitar: 1,
-          bass: 3,
-          drum: 2,
-          vocal: 5
-        });
+        // console.log('data', data);
+        const instrumentCount = this.countOfIntruments(data);
+        this.props.updateMusician(instrumentCount);
+        // console.log(instrumentCount, 'instrument count');
+        // console.log('test', this.state.musicians);
       });
-    // this.props.updateMusician({
-    //   guitar: 1,
-    //   bass: 3,
-    //   drum: 2,
-    //   vocal: 5
-    // });
     window.location.assign('/#mus-available');
   }
 
@@ -85,7 +79,7 @@ class MusLocation extends React.Component {
 
             <select className='rounded-border h-15' type="email" name='countries' required onChange={this.handleChangeCountry}>
               <option value="DEFAULT" disabled>Select Country</option>
-              <option value="USA">USA</option>
+              <option value="usa">USA</option>
 
             </select>
 
