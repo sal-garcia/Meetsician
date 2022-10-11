@@ -42,6 +42,26 @@ app.get('/api/users', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/musiciantypes', (req, res, next) => {
+  const instrument = req.query.instrument;
+  const sql = `
+  select *
+  from "users"
+  where
+
+  "instrument"=$1
+  `;
+  // console.log(instrument, 'instrument');
+
+  const params = [instrument];
+  db.query(sql, params)
+    .then(results => {
+      // console.log(results.rows);
+      res.json(results.rows);
+    })
+    .catch(err => next(err));
+});
+
 // // app.get('/api/users/location', (req, res, next) => {
 // //   // const userId = req.users.userId; when user auth is set up
 // //   const userId = 1;

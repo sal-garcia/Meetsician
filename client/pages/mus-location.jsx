@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserConsumer } from '../lib/MainContext';
 
 class MusLocation extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class MusLocation extends React.Component {
     } return instruments;
   }
 
-  loginClicked(e) {
+  loginClicked(updateMusician, e) {
     e.preventDefault();
     // console.log(this.props);
 
@@ -61,90 +62,98 @@ class MusLocation extends React.Component {
       .then(data => {
         // console.log('data', data);
         const instrumentCount = this.countOfIntruments(data);
-        this.props.updateMusician(instrumentCount);
+        updateMusician(instrumentCount);
+        // this.props.updateMusician(instrumentCount);
         // console.log(instrumentCount, 'instrument count');
         // console.log('test', this.state.musicians);
       });
-    window.location.assign('/#mus-available');
+    window.location.assign('/#musician/mus-available');
   }
 
   render() {
     return (
-      <div className='d-flex justify-content-center align-items-center text-center h-75'>
-        <div className='flex-column w-25 justify-content-evenly h-75'>
+      <UserConsumer>
+        { user => (
 
-          <h1>Where are you looking for musicians?</h1>
+          <div className='d-flex justify-content-center align-items-center text-center h-75'>
+            <div className='flex-column w-25 justify-content-evenly h-75'>
 
-          <form className='flex-column d-flex justify-content-evenly h-75' onSubmit={this.loginClicked}>
+              <h1>Where are you looking for musicians?</h1>
 
-            <select className='rounded-border h-15' type="email" name='countries' required onChange={this.handleChangeCountry}>
-              <option value="DEFAULT" disabled>Select Country</option>
-              <option value="usa">USA</option>
+              <form className='flex-column d-flex justify-content-evenly h-75' onSubmit={e => this.loginClicked(user.updateMusician, e)}>
 
-            </select>
+                <select className='rounded-border h-15' type="email" name='countries' required onChange={this.handleChangeCountry}>
+                  <option value="DEFAULT" disabled>Select Country</option>
+                  <option value="usa">USA</option>
 
-            <select className='rounded-border h-15' type="email" name='countries' required onChange={this.handleChangeState}>
-              <option value="DEFAULT" disabled>Select State</option>
-              <option value="AL">Alabama</option>
-              <option value="AK">Alaska</option>
-              <option value="AZ">Arizona</option>
-              <option value="AR">Arkansas</option>
-              <option value="CA">California</option>
-              <option value="CO">Colorado</option>
-              <option value="CT">Connecticut</option>
-              <option value="DE">Delaware</option>
-              <option value="DC">District Of Columbia</option>
-              <option value="FL">Florida</option>
-              <option value="GA">Georgia</option>
-              <option value="HI">Hawaii</option>
-              <option value="ID">Idaho</option>
-              <option value="IL">Illinois</option>
-              <option value="IN">Indiana</option>
-              <option value="IA">Iowa</option>
-              <option value="KS">Kansas</option>
-              <option value="KY">Kentucky</option>
-              <option value="LA">Louisiana</option>
-              <option value="ME">Maine</option>
-              <option value="MD">Maryland</option>
-              <option value="MA">Massachusetts</option>
-              <option value="MI">Michigan</option>
-              <option value="MN">Minnesota</option>
-              <option value="MS">Mississippi</option>
-              <option value="MO">Missouri</option>
-              <option value="MT">Montana</option>
-              <option value="NE">Nebraska</option>
-              <option value="NV">Nevada</option>
-              <option value="NH">New Hampshire</option>
-              <option value="NJ">New Jersey</option>
-              <option value="NM">New Mexico</option>
-              <option value="NY">New York</option>
-              <option value="NC">North Carolina</option>
-              <option value="ND">North Dakota</option>
-              <option value="OH">Ohio</option>
-              <option value="OK">Oklahoma</option>
-              <option value="OR">Oregon</option>
-              <option value="PA">Pennsylvania</option>
-              <option value="RI">Rhode Island</option>
-              <option value="SC">South Carolina</option>
-              <option value="SD">South Dakota</option>
-              <option value="TN">Tennessee</option>
-              <option value="TX">Texas</option>
-              <option value="UT">Utah</option>
-              <option value="VT">Vermont</option>
-              <option value="VA">Virginia</option>
-              <option value="WA">Washington</option>
-              <option value="WV">West Virginia</option>
-              <option value="WI">Wisconsin</option>
-              <option value="WY">Wyoming</option>
-            </select>
+                </select>
 
-            <input className='rounded-border h-15' type="text" placeholder='City full name, Ex: Los Angeles' required onChange={this.handleChangeCity}/>
+                <select className='rounded-border h-15' type="email" name='countries' required onChange={this.handleChangeState}>
+                  <option value="DEFAULT" disabled>Select State</option>
+                  <option value="AL">Alabama</option>
+                  <option value="AK">Alaska</option>
+                  <option value="AZ">Arizona</option>
+                  <option value="AR">Arkansas</option>
+                  <option value="CA">California</option>
+                  <option value="CO">Colorado</option>
+                  <option value="CT">Connecticut</option>
+                  <option value="DE">Delaware</option>
+                  <option value="DC">District Of Columbia</option>
+                  <option value="FL">Florida</option>
+                  <option value="GA">Georgia</option>
+                  <option value="HI">Hawaii</option>
+                  <option value="ID">Idaho</option>
+                  <option value="IL">Illinois</option>
+                  <option value="IN">Indiana</option>
+                  <option value="IA">Iowa</option>
+                  <option value="KS">Kansas</option>
+                  <option value="KY">Kentucky</option>
+                  <option value="LA">Louisiana</option>
+                  <option value="ME">Maine</option>
+                  <option value="MD">Maryland</option>
+                  <option value="MA">Massachusetts</option>
+                  <option value="MI">Michigan</option>
+                  <option value="MN">Minnesota</option>
+                  <option value="MS">Mississippi</option>
+                  <option value="MO">Missouri</option>
+                  <option value="MT">Montana</option>
+                  <option value="NE">Nebraska</option>
+                  <option value="NV">Nevada</option>
+                  <option value="NH">New Hampshire</option>
+                  <option value="NJ">New Jersey</option>
+                  <option value="NM">New Mexico</option>
+                  <option value="NY">New York</option>
+                  <option value="NC">North Carolina</option>
+                  <option value="ND">North Dakota</option>
+                  <option value="OH">Ohio</option>
+                  <option value="OK">Oklahoma</option>
+                  <option value="OR">Oregon</option>
+                  <option value="PA">Pennsylvania</option>
+                  <option value="RI">Rhode Island</option>
+                  <option value="SC">South Carolina</option>
+                  <option value="SD">South Dakota</option>
+                  <option value="TN">Tennessee</option>
+                  <option value="TX">Texas</option>
+                  <option value="UT">Utah</option>
+                  <option value="VT">Vermont</option>
+                  <option value="VA">Virginia</option>
+                  <option value="WA">Washington</option>
+                  <option value="WV">West Virginia</option>
+                  <option value="WI">Wisconsin</option>
+                  <option value="WY">Wyoming</option>
+                </select>
 
-            <button className='purple text-white sans-serif rounded-border h-15' type="submit">LOG IN</button>
+                <input className='rounded-border h-15' type="text" placeholder='City full name, Ex: Los Angeles' required onChange={this.handleChangeCity} />
 
-          </form>
-        </div>
-      </div>
+                <button className='purple text-white sans-serif rounded-border h-15' type="submit">LOG IN</button>
+
+              </form>
+            </div>
+          </div>
+        )
+
+        }
+      </UserConsumer>
     );
   }
 }

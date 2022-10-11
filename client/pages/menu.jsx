@@ -3,7 +3,7 @@ import React from 'react';
 class Menu extends React.Component {
 
   findMusician(e) {
-    window.location.assign('/#mus-location');
+    window.location.assign('/#musician/mus-location');
   }
 
   render() {
