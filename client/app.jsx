@@ -1,19 +1,35 @@
 import React from 'react';
 import { parseRoute } from './lib';
-// import Home from './pages/home';
+import Home from './pages/home';
 import LogIn from './pages/log-in';
-import MscnSearch from './pages/mscn-search';
+import Menu from './pages/menu';
+import MusAvail from './pages/mus-Avail';
+import MusLocation from './pages/mus-location';
+import MusiciansSelected from './pages/musiciansSelected';
 import Nav from './components/nav';
 import NotFound from './pages/not-found';
 import SignUp from './pages/sign-up';
+import { UserProvider } from './lib/MainContext';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      route: parseRoute(location.hash)
+      route: parseRoute(location.hash),
+      musicians: {
+        guitar: 0,
+        bass: 0,
+        drums: 0,
+        vocals: 0
+      }
     };
+    this.updateMusician = this.updateMusician.bind(this);
+  }
+
+  updateMusician(newLocation) {
+    this.setState({ musicians: newLocation });
+    // console.log('app muscians', this.state.musicians);
   }
 
   componentDidMount() { // updates the url hash
@@ -23,10 +39,25 @@ export default class App extends React.Component {
     });
   }
 
-  renderPage() {
-    const { route } = this.state;
-    if (route.path === 'musician-search') {
-      return <MscnSearch />;
+  renderMusicianPages() {
+    const { route } = this.state; // destructuring
+
+    if (route.path === 'musician/mus-location') {
+      return <MusLocation />;// passing method to muslocation so that muslocation can update number of musicians
+    }
+    if (route.path === 'musician/mus-available') {
+      return <MusAvail />;// passing the values from the state of muslocation
+    }
+    if (route.path === 'musician/mus-selected') {
+      return <MusiciansSelected />;
+    }
+
+  }
+
+  renderAppPages() {
+    const { route } = this.state; // destructuring
+    if (route.path === 'home') {
+      return <Home />;
     }
     if (route.path === 'log-in') {
       return <LogIn />;
@@ -34,7 +65,12 @@ export default class App extends React.Component {
     if (route.path === 'sign-up') {
       return <SignUp />;
     }
-
+    if (route.path === 'menu') {
+      return <Menu />;
+    }
+    if (route.path === 'login') {
+      return <LogIn />;
+    }
     return <NotFound />;
   }
 
@@ -43,7 +79,18 @@ export default class App extends React.Component {
     return ( // nav component is inserted here so that it  appears in every other component
       <div className='container-fluid black vh-100 text-white'>
         <Nav />
-        {this.renderPage()}
+        {this.state.route.path.startsWith('musician')
+          ? <UserProvider value={{
+            musicians: this.state.musicians,
+            updateMusician: this.updateMusician
+          }}>
+          {this.renderMusicianPages()}
+        </UserProvider>
+          : <div>
+            {this.renderAppPages()}
+          </div>
+      }
+
       </div>
     );
   }
