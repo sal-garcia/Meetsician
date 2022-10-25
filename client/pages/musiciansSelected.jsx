@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../lib/MainContext';
+import MusiciansAccounts from '../components/musicians-account';
 
 function MusiciansSelected() {
   const context = useContext(UserContext);
@@ -18,7 +19,8 @@ function MusiciansSelected() {
   }, []);
   return (
     <div>
-      <pre>{JSON.stringify(context)}</pre>
+      <pre className='purple'>{JSON.stringify(context)}</pre>
+      <MusiciansAccounts />
     </div>
   );
 }
