@@ -43,7 +43,7 @@ app.get('/api/users', (req, res, next) => {
 });
 
 app.get('/api/musiciantypes', (req, res, next) => {
-  const instrument = req.query.instrument;
+  const instrument = req.query.instrument;// select all users that have particular instrument
   const sql = `
   select *
   from "users"

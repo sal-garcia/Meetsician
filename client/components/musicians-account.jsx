@@ -1,6 +1,13 @@
+// import React, { useContext } from 'react';
 import React from 'react';
 
+// import { UserContext } from '../lib/MainContext';
+
 function MusiciansAccounts() {
+
+  // instrumentIcon(){
+  //   if(instr)
+  // }
 
   return (
 
@@ -22,9 +29,12 @@ function MusiciansAccounts() {
     </div>
       <h2>0</h2>
       <div className='d-flex justify-content-around w-25'>
-        <button>like</button>
-        <button>save</button>
-        <button>dislike</button>
+        <button className='purple text-light w-25 rounded-border'>like</button>
+        <button className='purple text-light w-25 rounded-border'>save</button>
+        <button className='purple text-light w-25 rounded-border'>dislike</button>
+      </div>
+      <div className='d-flex justify-content-end w-50 align-items-end'>
+        <button className='w-25 violet text-light'>comment</button>
       </div>
 
   </div >

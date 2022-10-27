@@ -16,11 +16,30 @@ function MusiciansSelected() {
         // console.log(data);
       });
 
+    //         console.log(data.data);
+    //         if (data.data.length > 0) {
+
+    //           let temp = '';
+    //           data.data.forEach(itemData => {
+    //             temp += '<tr>';
+    //             temp += '<td>' + itemData.id + '</td>';
+    //             temp += '<td>' + itemData.employee_name + '</td>';
+    //             temp += '<td>' + itemData.employee_salary + '</td></tr>';
+    //           });
+    //           document.getElementById('data').innerHTML = temp;
+    //         }
+    //       }
+    //     );
+    //   }
+    // );
+
   }, []);
   return (
-    <div>
+    <div className="d-flex align-content-around flex-wrap">
       <pre className='purple'>{JSON.stringify(context)}</pre>
       <MusiciansAccounts />
+      <MusiciansAccounts />
+
     </div>
   );
 }
