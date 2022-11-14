@@ -5,6 +5,7 @@ import LogIn from './pages/log-in';
 import Menu from './pages/menu';
 import MusAvail from './pages/mus-Avail';
 import MusLocation from './pages/mus-location';
+import MusicianSaved from './pages/mus-saved';
 import MusiciansSelected from './pages/musiciansSelected';
 import Nav from './components/nav';
 import NotFound from './pages/not-found';
@@ -17,12 +18,7 @@ export default class App extends React.Component {
 
     this.state = {
       route: parseRoute(location.hash),
-      musicians: {
-        guitar: 0,
-        bass: 0,
-        drums: 0,
-        vocals: 0
-      }
+      musicians: null
     };
     this.updateMusician = this.updateMusician.bind(this);
   }
@@ -51,6 +47,9 @@ export default class App extends React.Component {
     if (route.path === 'musician/mus-selected') {
       return <MusiciansSelected />;
     }
+    if (route.path === 'musician/mus-saved') {
+      return <MusicianSaved />;
+    }
 
   }
 
@@ -77,7 +76,7 @@ export default class App extends React.Component {
   render() {
     // console.log('app state:', this.state);
     return ( // nav component is inserted here so that it  appears in every other component
-      <div className='container-fluid black vh-100 text-white'>
+      <div className='container-fluid black text-white'>
         <Nav />
         {this.state.route.path.startsWith('musician')
           ? <UserProvider value={{

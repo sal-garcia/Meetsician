@@ -1,21 +1,48 @@
-import React from 'react';
-import { UserConsumer } from '../lib/MainContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../lib/MainContext';
 import TypesOfMusicians from '../components/typesOfMusicians';
-class MusAvail extends React.Component {
-  constructor(props) {
-    super(props);
-    this.musicianSelect = this.musicianSelect.bind(this);
+function MusAvail() {
+  const context = useContext(UserContext);
+  // const [localContext, setLocalContext] = useState(null);
+  const [queryParams, setQueryParams] = useState('');
+
+  function countOfIntruments(arrayData) {
+    const instruments = {
+      guitar: [],
+      bass: [],
+      drums: [],
+      vocals: []
+    };
+    for (const element of arrayData) {
+      const instrument = element.instrument; // ?
+
+      instruments[instrument].push(element);
+    } return instruments;
   }
 
-  musicianSelect(instrument) {
-    window.location.assign(`/#musician/mus-selected?instrument=${instrument}`);
-  }
+  useEffect(() => { // renders each time the componenet changes
+    // console.log(context, 'useeffectcontext');
+    // console.log(context, 'musiciansCONTEXTocal');
+    const params = (window.location);
+    const queryParamsMatch = params.hash.match(/\?(.*)$/);
+    queryParamsMatch ? setQueryParams(queryParamsMatch[1]) : setQueryParams('');
 
-  render() {
-    return (
-    <UserConsumer>
-      {
-        user => (
+    if (!context.musicians) {
+
+      if (queryParamsMatch) {
+        fetch(`/api/users?${queryParamsMatch[1]}`)
+          .then(response => response.json())
+          .then(result => context.updateMusician(countOfIntruments(result)));
+      }
+    }
+  }, []);
+
+  const musicianSelect = instrument => {
+    window.location.assign(`/#musician/mus-selected?instrument=${instrument}&${queryParams}`);
+  };
+
+  return (
+
           <div>
 
 <div className='text-center flex-column'>
@@ -23,60 +50,31 @@ class MusAvail extends React.Component {
 </div>
 
   <div className='row justify-content-around align-content-around h-75 black'>
+        {
+        context.musicians &&
+        <>
+    <TypesOfMusicians instrumentCount={context.musicians.guitar.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="guitar"/>
+   <TypesOfMusicians instrumentCount={context.musicians.vocals.length} musicianSelect={musicianSelect} instrumentIcon="microphone" instrumentName="vocals" />
+   <TypesOfMusicians instrumentCount={context.musicians.drums.length} musicianSelect={musicianSelect} instrumentIcon="drum" instrumentName="drums"/>
+   <TypesOfMusicians instrumentCount={context.musicians.bass.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="bass" />
 
-              <TypesOfMusicians instrument={user.musicians.guitar} musicianSelect={this.musicianSelect} instrumentName="guitar" />
-              <TypesOfMusicians instrument={user.musicians.vocals} musicianSelect={this.musicianSelect} instrumentName="microphone" />
-              <TypesOfMusicians instrument={user.musicians.drums} musicianSelect={this.musicianSelect} instrumentName="drum" />
-              <TypesOfMusicians instrument={user.musicians.bass} musicianSelect={this.musicianSelect} instrumentName="guitar" />
+        </>
+    // <TypesOfMusicians instrumentCount={context.musicians.guitar.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="guitar"/>
+    // <TypesOfMusicians instrumentCount={context.musicians.vocals.length} musicianSelect={musicianSelect} instrumentIcon="microphone" instrumentName="vocals" />
+    //           <TypesOfMusicians instrumentCount={context.musicians.drums.length} musicianSelect={musicianSelect} instrumentIcon="drum" instrumentName="drums"/>
+    //           <TypesOfMusicians instrumentCount={context.musicians.bass.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="bass" />
 
-    {/* <div className='d-flex flex-column justify-content-around mt-5 text-center h-75 w-15 align-items-center'>
-    <div>
-              <h1>{user.musicians.vocals}</h1>
-    </div>
-    <div className='w-180px h-50 beige d-flex align-items-center justify-content-center'>
-              <i className="fa-solid text-dark fa-8x fa-microphone"></i>
-    </div>
-    <div>
-      <button onClick={() => this.musicianSelect('vocals')} className='purple text-light rounded-border'>select</button>
-    </div>
-  </div>
-
-  <div className='d-flex flex-column justify-content-around mt-5 text-center h-75 w-15 align-items-center'>
-    <div>
-              <h1>{user.musicians.drums}</h1>
-    </div>
-    <div className='w-180px h-50 beige d-flex align-items-center justify-content-center'>
-      <i className="fa-solid text-dark fa-8x fa-drum"></i>
-    </div>
-    <div>
-      <button onClick={() => this.musicianSelect('drums')} className='purple text-light rounded-border'>select</button>
-    </div>
-  </div>
-
-  <div className='d-flex flex-column justify-content-around mt-5 text-center h-75 w-15 align-items-center'>
-    <div>
-              <h1>{user.musicians.bass}</h1>
-    </div>
-    <div className='w-180px h-50 beige d-flex align-items-center justify-content-center'>
-              <i className="fa-solid text-dark fa-8x fa-guitar"></i>
-
-    </div>
-    <div>
-      <button onClick={() => this.musicianSelect('bass')} className='purple text-light rounded-border'>select</button>
-    </div>
-  </div>
-
-  </div>
-
-  </div> */}
-  </div>
-  </div>
-        )
-      }
-    </UserConsumer>
-
-    );
   }
+              {/* <TypesOfMusicians instrumentCount={user.musicians.guitar.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="guitar"/>
+              <TypesOfMusicians instrumentCount={user.musicians.vocals.length} musicianSelect={musicianSelect} instrumentIcon="microphone" instrumentName="vocals" />
+              <TypesOfMusicians instrumentCount={user.musicians.drums.length} musicianSelect={musicianSelect} instrumentIcon="drum" instrumentName="drums"/>
+              <TypesOfMusicians instrumentCount={user.musicians.bass.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="bass" /> */}
+
+  </div>
+  </div>
+
+  );
+
 }
 
 export default MusAvail;

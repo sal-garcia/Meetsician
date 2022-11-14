@@ -12,7 +12,10 @@ class SignUp extends React.Component {
       about: '',
       password: '',
       email: '',
-      photoUrl: ''
+      photoUrl: '',
+      likes: 1,
+      saved: false
+
     };
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeInstrument = this.onChangeInstrument.bind(this);
@@ -60,11 +63,7 @@ class SignUp extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    // const locationSplit = this.state.location.split(',');
-    // if (locationSplit.length !== 3) {
-    //   this.setState({ errorLocation: true });
-    //   return;
-    // }
+
     this.setState({ errorLocation: false });
     fetch('/api/user_create', {
       method: 'POST',
@@ -80,7 +79,10 @@ class SignUp extends React.Component {
         about: this.state.about,
         email: this.state.email,
         hashedPassword: this.state.password,
-        photoUrl: this.state.photoUrl
+        photoUrl: this.state.photoUrl,
+        likes: this.state.likes,
+        saved: this.state.saved
+
       })
     })
       .then(res => res.json())
@@ -93,7 +95,10 @@ class SignUp extends React.Component {
         about: '',
         password: '',
         email: '',
-        photoUrl: ''
+        photoUrl: '',
+        likes: 1,
+        saved: false
+
       }));
 
     window.location.assign('/#login');
@@ -110,8 +115,6 @@ class SignUp extends React.Component {
           <form className='flex-column d-flex justify-content-evenly h-100' action="/user_create" method="POST" onSubmit={this.onSubmit}>
 
             <input className='rounded-border h-15' type="text" placeholder='name' required value={this.state.name} onChange={this.onChangeName}/>
-
-            {/* <input className='rounded-border h-15' type="instr" placeholder='instrument' required value={this.state.instrument} onChange={this.onChangeInstrument}/> */}
 
             <span className='d-flex'>
               <select className='rounded-borders w-100' name="instruments" defaultValue='' required onChange={this.onChangeInstrument}>
@@ -184,8 +187,6 @@ class SignUp extends React.Component {
             </select>
             <input type="text" className='w-33 rounded-border' placeholder='City Full Name' onChange={this.onChangeCity}/>
             </span>
-            {/* <input className='rounded-border h-15' type="text" placeholder='country, state, city' required value={this.state.location} onChange={this.onChangeLocation}/>
-              {this.state.errorLocation && <p className='text-danger'>error , needed after each location</p>} */}
 
             <textarea name="user-info" className='rounded-border h-25' maxLength="200" placeholder='about' required value={this.state.about} onChange={this.onChangeAbout}></textarea>
 

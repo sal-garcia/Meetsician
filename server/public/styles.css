@@ -1,4 +1,9 @@
+html {
+  background-color: black;
+}
+
 /* colors */
+
 .black {
   background-color: black;
 }
@@ -9,6 +14,10 @@
 
 .beige {
   background-color: #e5e5e5;
+}
+
+.violet {
+  background-color: #a239ca;
 }
 
 /* colors */
@@ -45,6 +54,15 @@
     display: flex;
     flex-direction: column;
   }
+
+  .phone-account {
+    width: 300px !important;
+    overflow: scroll;
+  }
+
+  .p-button {
+    width: 350px !important;
+  }
 }
 
 /* phone view */
@@ -76,4 +94,8 @@
 
 select {
   font-size: small;
+}
+
+.m-account {
+  border: 2px solid purple;
 }
