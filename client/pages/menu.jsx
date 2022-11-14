@@ -6,6 +6,14 @@ class Menu extends React.Component {
     window.location.assign('/#musician/mus-location');
   }
 
+  myMusicians(e) {
+    window.location.assign('/#musician/mus-saved');
+  }
+
+  myAccount(e) {
+    window.location.assign('/#musician/mus-saved');
+  }
+
   render() {
     return (
       <div className='d-flex justify-content-center align-items-center text-center h-75'>
@@ -17,7 +25,7 @@ class Menu extends React.Component {
 
             <button className='purple text-white sans-serif rounded-border h-15' onClick={this.findMusician}>FIND MUSICIAN</button>
 
-            <button className='purple text-white sans-serif rounded-border h-15'>MY MUSICIAN</button>
+            <button className='purple text-white sans-serif rounded-border h-15' onClick={this.myMusicians}>MY MUSICIAN</button>
 
             <button className='purple text-white sans-serif rounded-border h-15'>MY ACCOUNT</button>
 

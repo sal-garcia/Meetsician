@@ -37,37 +37,29 @@ class MusLocation extends React.Component {
 
   countOfIntruments(arrayData) {
     const instruments = {
-      guitar: 0,
-      bass: 0,
-      drums: 0,
-      vocals: 0
+      guitar: [],
+      bass: [],
+      drums: [],
+      vocals: []
     };
     for (const element of arrayData) {
-      const instrument = element.instrument;
-      instruments[instrument] += 1;
+      const instrument = element.instrument; // ?
+
+      instruments[instrument].push(element);
     } return instruments;
   }
 
   loginClicked(updateMusician, e) {
     e.preventDefault();
-    // console.log(this.props);
-
-    // console.log(this.state.country);
-    // console.log(this.state.state);
-    // console.log(this.state.city);
-    // console.log(this.state.guitar);
 
     fetch(`/api/users?country=${this.state.country}&state=${this.state.state}&city=${this.state.city}`)
       .then(response => response.json())
       .then(data => {
-        // console.log('data', data);
         const instrumentCount = this.countOfIntruments(data);
-        updateMusician(instrumentCount);
-        // this.props.updateMusician(instrumentCount);
-        // console.log(instrumentCount, 'instrument count');
-        // console.log('test', this.state.musicians);
+        updateMusician(instrumentCount);// ?
+        window.location.assign(`/#musician/mus-available?country=${this.state.country}&state=${this.state.state}&city=${this.state.city}`);
+
       });
-    window.location.assign('/#musician/mus-available');
   }
 
   render() {

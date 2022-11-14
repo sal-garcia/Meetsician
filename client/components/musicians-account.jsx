@@ -1,43 +1,130 @@
-// import React, { useContext } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
+import ContactEmail from './contact-email';
 
-// import { UserContext } from '../lib/MainContext';
+function MusiciansAccounts(props) {
+  const [showContactEmail, setShowContactEmail] = useState(false);
 
-function MusiciansAccounts() {
+  const ContactButton = param => {
 
-  // instrumentIcon(){
-  //   if(instr)
-  // }
+    setShowContactEmail(true);
+
+  };
+
+  const likeButton = () => {
+    const newLikes = props.likes + 1;
+
+    fetch('/api/user_likes', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: props.name,
+        email: props.email,
+        likes: newLikes
+        // saved: props.saved
+
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+
+        props.updateAccount(props.index, { likes: newLikes });
+      })
+      .catch(err => {
+        console.error('error:', err);
+      });
+    props.setLikes(newLikes);
+
+  };
+
+  const dislikeButton = () => {
+    const newLikes = props.likes - 1;
+
+    fetch('/api/user_dislikes', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: props.name,
+        email: props.email,
+        likes: newLikes
+        // saved: props.saved
+
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+
+      })
+      .catch(err => {
+        console.error('error:', err);
+      });
+  };
+
+  const savedButton = () => {
+    const newSaved = !props.saved;
+
+    fetch('/api/userSaved', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: props.name,
+        email: props.email,
+        saved: newSaved
+
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+
+        props.updateAccount(props.index, { saved: newSaved });
+
+      })
+      .catch(err => {
+        console.error('error:', err);
+      });
+  };
 
   return (
 
-  <div className='d-flex justify-content-center align-items-center flex-column'>
-    <div className='w-25 beige'>
+  <>
 
-      <div className="w-1 h-50 beige d-flex align-items-center justify-content-center">
+  <div className='d-flex align-items-center flex-column mb-5 m-account'>
+    <div className='beige w-25 phone-account'>
+      <div className="h-50 beige d-flex align-items-center justify-content-center">
         <i className="fa-solid text-dark fa-8x fa-guitar"></i>
-
       </div>
-      <div className='w-100 text-dark'>
-        <h3>name</h3>
-        <h3>instrument</h3>
-        <p><strong>About me:</strong> paragraph about the muscian network test more testing
-        even some lorem ipusm just to test whwat happens when the users makes a long about me
-        paragraph</p>
+        <div className=' text-dark badge badge-primary text-wrap w-100'>
+        <h4 className='overflow-auto'>name: {props.name}</h4>
+        <h4 className='overflow-auto'>instrument: {props.instrumentName}</h4>
+        <h4 className='overflow-auto'>contact me: {props.email}</h4>
+        <p className='overflow-auto margin mb-2 text-wrap'><strong>About me:</strong> {props.about}</p>
       </div>
-
     </div>
-      <h2>0</h2>
-      <div className='d-flex justify-content-around w-25'>
-        <button className='purple text-light w-25 rounded-border'>like</button>
-        <button className='purple text-light w-25 rounded-border'>save</button>
-        <button className='purple text-light w-25 rounded-border'>dislike</button>
+      <h2>{props.likes}</h2>
+      <div className='d-flex justify-content-around w-25 p-button'>
+          <button className='purple text-light w-50 rounded-border' onClick={likeButton}>like</button>
+          <button className='purple text-light w-50 rounded-border' onClick={savedButton}>{props.saved ? 'unsave' : 'save'}</button>
+          <button className='purple text-light w-50 rounded-border' onClick={dislikeButton}>dislike</button>
       </div>
       <div className='d-flex justify-content-end w-50 align-items-end'>
-        <button className='w-25 violet text-light'>comment</button>
+        <button className='w-25 violet text-light p-button' onClick={ContactButton}>contact</button>
+      </div>
+      <div>
+        {showContactEmail &&
+        <ContactEmail email={props.email}/>
+        }
+
       </div>
 
   </div >
+
+    </>
+
   );
 }
 

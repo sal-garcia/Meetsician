@@ -1,4 +1,9 @@
+html {
+  background-color: black;
+}
+
 /* colors */
+
 .black {
   background-color: black;
 }
@@ -49,6 +54,15 @@
     display: flex;
     flex-direction: column;
   }
+
+  .phone-account {
+    width: 300px !important;
+    overflow: scroll;
+  }
+
+  .p-button {
+    width: 350px !important;
+  }
 }
 
 /* phone view */
@@ -80,4 +94,8 @@
 
 select {
   font-size: small;
+}
+
+.m-account {
+  border: 2px solid purple;
 }
