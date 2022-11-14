@@ -24,10 +24,10 @@ class Menu extends React.Component {
           <div className='flex-column d-flex justify-content-evenly h-75' action="">
 
             <button className='purple text-white sans-serif rounded-border h-15' onClick={this.findMusician}>FIND MUSICIAN</button>
-
+{/*
             <button className='purple text-white sans-serif rounded-border h-15' onClick={this.myMusicians}>MY MUSICIAN</button>
 
-            <button className='purple text-white sans-serif rounded-border h-15'>MY ACCOUNT</button>
+            <button className='purple text-white sans-serif rounded-border h-15'>MY ACCOUNT</button> */}
 
           </div>
         </div>
