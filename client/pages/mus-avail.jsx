@@ -3,7 +3,7 @@ import { UserContext } from '../lib/MainContext';
 import TypesOfMusicians from '../components/typesOfMusicians';
 function MusAvail() {
   const context = useContext(UserContext);
-  // const [localContext, setLocalContext] = useState(null);
+
   const [queryParams, setQueryParams] = useState('');
 
   function countOfIntruments(arrayData) {
@@ -14,15 +14,13 @@ function MusAvail() {
       vocals: []
     };
     for (const element of arrayData) {
-      const instrument = element.instrument; // ?
+      const instrument = element.instrument;
 
       instruments[instrument].push(element);
     } return instruments;
   }
 
   useEffect(() => { // renders each time the componenet changes
-    // console.log(context, 'useeffectcontext');
-    // console.log(context, 'musiciansCONTEXTocal');
     const params = (window.location);
     const queryParamsMatch = params.hash.match(/\?(.*)$/);
     queryParamsMatch ? setQueryParams(queryParamsMatch[1]) : setQueryParams('');
@@ -53,22 +51,14 @@ function MusAvail() {
         {
         context.musicians &&
         <>
-    <TypesOfMusicians instrumentCount={context.musicians.guitar.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="guitar"/>
+   <TypesOfMusicians instrumentCount={context.musicians.guitar.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="guitar"/>
    <TypesOfMusicians instrumentCount={context.musicians.vocals.length} musicianSelect={musicianSelect} instrumentIcon="microphone" instrumentName="vocals" />
    <TypesOfMusicians instrumentCount={context.musicians.drums.length} musicianSelect={musicianSelect} instrumentIcon="drum" instrumentName="drums"/>
    <TypesOfMusicians instrumentCount={context.musicians.bass.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="bass" />
 
         </>
-    // <TypesOfMusicians instrumentCount={context.musicians.guitar.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="guitar"/>
-    // <TypesOfMusicians instrumentCount={context.musicians.vocals.length} musicianSelect={musicianSelect} instrumentIcon="microphone" instrumentName="vocals" />
-    //           <TypesOfMusicians instrumentCount={context.musicians.drums.length} musicianSelect={musicianSelect} instrumentIcon="drum" instrumentName="drums"/>
-    //           <TypesOfMusicians instrumentCount={context.musicians.bass.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="bass" />
 
   }
-              {/* <TypesOfMusicians instrumentCount={user.musicians.guitar.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="guitar"/>
-              <TypesOfMusicians instrumentCount={user.musicians.vocals.length} musicianSelect={musicianSelect} instrumentIcon="microphone" instrumentName="vocals" />
-              <TypesOfMusicians instrumentCount={user.musicians.drums.length} musicianSelect={musicianSelect} instrumentIcon="drum" instrumentName="drums"/>
-              <TypesOfMusicians instrumentCount={user.musicians.bass.length} musicianSelect={musicianSelect} instrumentIcon="guitar" instrumentName="bass" /> */}
 
   </div>
   </div>

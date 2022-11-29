@@ -43,7 +43,7 @@ class MusLocation extends React.Component {
       vocals: []
     };
     for (const element of arrayData) {
-      const instrument = element.instrument; // ?
+      const instrument = element.instrument;
 
       instruments[instrument].push(element);
     } return instruments;

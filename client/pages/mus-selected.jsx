@@ -58,9 +58,6 @@ function MusiciansSelected() {
         instrument &&
         renderAccounts()
       }
-      {/* <pre className='purple'>{JSON.stringify(context)}</pre> */}
-
-      {/* <MusiciansAccounts /> */}
 
     </div>
   );
