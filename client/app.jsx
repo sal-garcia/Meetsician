@@ -3,10 +3,9 @@ import { parseRoute } from './lib';
 import Home from './pages/home';
 import LogIn from './pages/log-in';
 import Menu from './pages/menu';
-import MusAvail from './pages/mus-Avail';
+import MusAvail from './pages/mus-avail';
 import MusLocation from './pages/mus-location';
-import MusicianSaved from './pages/mus-saved';
-import MusiciansSelected from './pages/musiciansSelected';
+import MusiciansSelected from './pages/mus-selected';
 import Nav from './components/nav';
 import NotFound from './pages/not-found';
 import SignUp from './pages/sign-up';
@@ -46,9 +45,6 @@ export default class App extends React.Component {
     }
     if (route.path === 'musician/mus-selected') {
       return <MusiciansSelected />;
-    }
-    if (route.path === 'musician/mus-saved') {
-      return <MusicianSaved />;
     }
 
   }
