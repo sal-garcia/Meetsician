@@ -34,6 +34,7 @@ Try the application live at https://meetsician.meetsician.com/#musician/mus-loca
 - User can email other accounts directly from website
 
 ## Preview
+![meetsician gif](https://user-images.githubusercontent.com/51901536/205154378-20daf30c-e3c2-4b66-b4d3-d10744144f60.gif)
 
 
 ## Development
@@ -49,7 +50,7 @@ Try the application live at https://meetsician.meetsician.com/#musician/mus-loca
 1. Clone the repository.
 
     ```shell
-    git clone https://github.com/Learning-Fuze/sgt-react
+    git clone https://github.com/sal-garcia/Meetsician.git
     cd sgt-react
     ```
 
