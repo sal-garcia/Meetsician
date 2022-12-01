@@ -51,7 +51,7 @@ Try the application live at https://meetsician.meetsician.com/#musician/mus-loca
 
     ```shell
     git clone https://github.com/sal-garcia/Meetsician.git
-    cd sgt-react
+    cd Meetsician
     ```
 
 1. Install all dependencies with NPM.
@@ -60,11 +60,21 @@ Try the application live at https://meetsician.meetsician.com/#musician/mus-loca
     npm install
     ```
 
-1. Import the example database to MongoDB.
+1.  make sure to copy the .env.example to .env and then create the database
+
+
+1. Create the database .
 
     ```shell
-    mongoimport --db sgt-react database/dump.json
+    createdb meetsician
     ```
+
+1. Run the import.
+
+    ```shell
+    npm run db:import
+    ```
+
 
 1. Start the project. Once started you can view the application by opening http://localhost:3000 in your browser.
 
