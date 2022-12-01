@@ -1,37 +1,72 @@
 # Meetsician
 
-A web application for musicians who are looking for other musicians.
-I wanted to build this project because as a musician myself i always struggled finding people to jam with
-A link to the live deployment:
+A full stack JavaScript application for Musicians who want to meet other musicians.
 
-List of technologies used to build the project:
-HTML5
-CSS3
-Bootstrap
-React
-JSON
-Node.js
-SQL
-Pgweb
-PostgreSQL
+## Why I Built This
 
-A list of the features implemented in the project:
-user can create an account
-user can search for different musicians by instrument
-user can search for musicians by location
-user can user save musicians accoutns that they like
-user can unsave musicians accounts that they dont like
-user can like other accounts
-user can dislike other accounts
-user can read info about other musicians
-user can email other musicians directly from the website
+As a musician myself, I wanted to build an application that helped meet other musicians to facilitate playing music together.
 
-Gif:
+## Technologies Used
 
-in the future id like to perhaps add a few features including an api to help with the sign up process of looking for cities in states,
-the ability for the user to update their account, and user authentication
+- React.js
+- Webpack
+- Bootstrap 5
+- Node.js
+- PostgresSQL
+- HTML5
+- CSS3
+- Heroku
+- React
+- SQL
+- JSON
 
-A detailed set of instructions for getting started,
-step 1: sign up
-step 2: log in (no need for user authentication simply click log in)
-step 3: look for musicians in whatever city you want(you should be able to find your own account)
+## Live Demo
+
+Try the application live at https://meetsician.meetsician.com/#musician/mus-location
+
+## Features
+
+- User can create an account.
+- User can view other musicians in the are.
+- User can search for musicians by instrument.
+- User can like/dislike another account.
+- User can save/unsave another acount.
+- User can email other accounts directly from website
+
+## Preview
+
+
+## Development
+
+### System Requirements
+
+- Node.js 10 or higher
+- NPM 6 or higher
+- MongoDB 4 or higher
+
+### Getting Started
+
+1. Clone the repository.
+
+    ```shell
+    git clone https://github.com/Learning-Fuze/sgt-react
+    cd sgt-react
+    ```
+
+1. Install all dependencies with NPM.
+
+    ```shell
+    npm install
+    ```
+
+1. Import the example database to MongoDB.
+
+    ```shell
+    mongoimport --db sgt-react database/dump.json
+    ```
+
+1. Start the project. Once started you can view the application by opening http://localhost:3000 in your browser.
+
+    ```shell
+    npm run dev
+    ```
