@@ -43,7 +43,6 @@ Try the application live at https://meetsician.meetsician.com/#musician/mus-loca
 
 - Node.js 10 or higher
 - NPM 6 or higher
-- MongoDB 4 or higher
 
 ### Getting Started
 
