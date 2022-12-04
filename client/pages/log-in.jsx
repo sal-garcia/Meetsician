@@ -4,7 +4,7 @@ class LogIn extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    window.location.assign('/#menu');
+    window.location.assign('/#musician/mus-location');
   }
 
   render() {
