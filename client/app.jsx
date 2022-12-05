@@ -2,7 +2,6 @@ import React from 'react';
 import { parseRoute } from './lib';
 import Home from './pages/home';
 import LogIn from './pages/log-in';
-import Menu from './pages/menu';
 import MusAvail from './pages/mus-avail';
 import MusLocation from './pages/mus-location';
 import MusiciansSelected from './pages/mus-selected';
@@ -59,9 +58,6 @@ export default class App extends React.Component {
     }
     if (route.path === 'sign-up') {
       return <SignUp />;
-    }
-    if (route.path === 'menu') {
-      return <Menu />;
     }
     if (route.path === 'login') {
       return <LogIn />;
