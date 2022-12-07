@@ -80,7 +80,7 @@ class MusLocation extends React.Component {
 
                 </select>
 
-                <select className='rounded-border h-15' type="email" name='countries' required onChange={this.handleChangeState}>
+                <select className='rounded-border h-15' type="email" name='countries' defaultValue="DEFAULT" required onChange={this.handleChangeState}>
                   <option value="DEFAULT" disabled>Select State</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
@@ -137,7 +137,7 @@ class MusLocation extends React.Component {
 
                 <input className='rounded-border h-15' type="text" placeholder='City full name, Ex: Los Angeles' required onChange={this.handleChangeCity} />
 
-                <button className='purple text-white sans-serif rounded-border h-15' type="submit">LOG IN</button>
+                <button className='purple text-white sans-serif rounded-border h-15' type="submit">Search</button>
 
               </form>
             </div>
