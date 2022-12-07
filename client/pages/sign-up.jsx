@@ -46,7 +46,7 @@ class SignUp extends React.Component {
   }
 
   onChangeCity(e) {
-    this.setState({ city: e.target.value });
+    this.setState({ city: e.target.value.toLowerCase() });
   }
 
   onChangeAbout(e) {

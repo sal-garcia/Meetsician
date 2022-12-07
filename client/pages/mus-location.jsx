@@ -32,7 +32,7 @@ class MusLocation extends React.Component {
 
   handleChangeCity(e) {
 
-    this.setState({ city: e.target.value });
+    this.setState({ city: e.target.value.toLowerCase() });
   }
 
   countOfIntruments(arrayData) {
@@ -135,7 +135,7 @@ class MusLocation extends React.Component {
                   <option value="WY">Wyoming</option>
                 </select>
 
-                <input className='rounded-border h-15' type="text" placeholder='City full name, Ex: Los Angeles' required onChange={this.handleChangeCity} />
+                <input className='rounded-border h-15' type="text" placeholder='City: full name' required onChange={this.handleChangeCity} />
 
                 <button className='purple text-white sans-serif rounded-border h-15' type="submit">Search</button>
 
