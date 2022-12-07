@@ -162,19 +162,19 @@ app.put('/api/userSaved', (req, res, next) => {
 
 // user authentication sign up
 app.post('/api/auth/sign-up', (req, res, next) => {
-  const { name, password } = req.body;
-  if (!name || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     throw new ClientError(400, 'username and password are required fields');
   }
   argon2
     .hash(password)
     .then(hashedPassword => {
       const sql = `
-        insert into "users" ("name", "hashed_password")
+        insert into "users" ("email", "hashed_password")
         values ($1, $2)
-        returning "user_id", "name", "createdAt"
+        returning "user_id", "email", "createdAt"
       `;
-      const params = [name, hashedPassword];
+      const params = [email, hashedPassword];
       return db.query(sql, params);
     })
     .then(result => {
@@ -185,21 +185,20 @@ app.post('/api/auth/sign-up', (req, res, next) => {
 });
 // user authentication sign up
 
-// user authentication log in
+// user authentication sign in
 app.post('/api/auth/sign-in', (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     throw new ClientError(401, 'invalid login');
   }
-  /* your code starts here */
 
   const sql = `
   select "userId",
          "hashedPassword"
     from "users"
-   where "username" = $1;
+   where "email" = $1;
   `;
-  const param = [username];
+  const param = [email];
   db.query(sql, param)
     .then(result => {
       const [user] = result.rows;
@@ -214,7 +213,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
             } else {
               const payload = {
                 userId: user.userId,
-                username
+                email
               };
               const token = jwt.sign(payload, process.env.TOKEN_SECRET);
               res.status(200).json({
@@ -228,7 +227,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     })
     .catch(err => next(err));
 });
-// user authentication log in
+// user authentication sign in
 
 app.use(ErrorMiddleware);
 
