@@ -72,24 +72,24 @@ app.get('/api/musiciantypes', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/user_create', (req, res, next) => {
-  const { name, instrument, country, state, city, about, email, hashedPassword, photoUrl, likes, saved } = req.body;
+// app.post('/api/user_create', (req, res, next) => {
+//   const { name, instrument, country, state, city, about, email, hashedPassword, photoUrl, likes, saved } = req.body;
 
-  const sql =
-     `insert into users(name, instrument, country, state, city, about, email, hashed_password, photo_url ,likes,saved)
-    values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`
-  ;
+//   const sql =
+//      `insert into users(name, instrument, country, state, city, about, email, hashed_password, photo_url ,likes,saved)
+//     values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`
+//   ;
 
-  const params = [name, instrument, country, state, city, about, email, hashedPassword, photoUrl, likes, saved];
+//   const params = [name, instrument, country, state, city, about, email, hashedPassword, photoUrl, likes, saved];
 
-  db.query(sql, params)
-    .then(results => {
-      res.json(results.rows);
-      res.end();
-    })
-    .catch(err => next(err));
+//   db.query(sql, params)
+//     .then(results => {
+//       res.json(results.rows);
+//       res.end();
+//     })
+//     .catch(err => next(err));
 
-});
+// });
 
 app.put('/api/user_likes', (req, res, next) => {
 
@@ -162,7 +162,7 @@ app.put('/api/userSaved', (req, res, next) => {
 
 // user authentication sign up
 app.post('/api/auth/sign-up', (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, name, instrument, country, state, city, about, photoUrl, likes, saved } = req.body;
   if (!email || !password) {
     throw new ClientError(400, 'username and password are required fields');
   }
@@ -170,11 +170,11 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     .hash(password)
     .then(hashedPassword => {
       const sql = `
-        insert into "users" ("email", "hashed_password")
-        values ($1, $2)
-        returning "user_id", "email", "createdAt"
+        insert into "users" (email, hashed_password, name, instrument, country, state, city, about, photo_url, likes, saved)
+        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+        returning "user_id", "email", "created_at"
       `;
-      const params = [email, hashedPassword];
+      const params = [email, hashedPassword, name, instrument, country, state, city, about, photoUrl, likes, saved];
       return db.query(sql, params);
     })
     .then(result => {
@@ -193,12 +193,14 @@ app.post('/api/auth/sign-in', (req, res, next) => {
   }
 
   const sql = `
-  select "userId",
-         "hashedPassword"
-    from "users"
-   where "email" = $1;
+  select email,
+         hashed_password
+    from users
+
+   where email = $1;
   `;
-  const param = [email];
+  const param = [email, password];
+  // console.log(param, 'param');
   db.query(sql, param)
     .then(result => {
       const [user] = result.rows;
@@ -212,8 +214,9 @@ app.post('/api/auth/sign-in', (req, res, next) => {
               throw new ClientError(401, 'invalid login');
             } else {
               const payload = {
-                userId: user.userId,
-                email
+                // userId: user.userId,
+                email,
+                password: user.hashedPassword
               };
               const token = jwt.sign(payload, process.env.TOKEN_SECRET);
               res.status(200).json({

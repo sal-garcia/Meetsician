@@ -65,7 +65,7 @@ class SignUp extends React.Component {
     e.preventDefault();
 
     this.setState({ errorLocation: false });
-    fetch('/api/user_create', {
+    fetch('/api/auth/sign-up', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -78,7 +78,7 @@ class SignUp extends React.Component {
         city: this.state.city,
         about: this.state.about,
         email: this.state.email,
-        hashedPassword: this.state.password,
+        password: this.state.password,
         photoUrl: this.state.photoUrl,
         likes: this.state.likes,
         saved: this.state.saved
@@ -112,13 +112,13 @@ class SignUp extends React.Component {
 
           <h1>Create an Account</h1>
 
-          <form className='flex-column d-flex justify-content-evenly h-100' action="/user_create" method="POST" onSubmit={this.onSubmit}>
+          <form className='flex-column d-flex justify-content-evenly h-100' action="/api/auth/sign-up" method="POST" onSubmit={this.onSubmit}>
 
             <input className='rounded-border h-15' type="text" placeholder='name' required value={this.state.name} onChange={this.onChangeName}/>
 
             <span className='d-flex'>
-              <select className='rounded-borders w-100' name="instruments" defaultValue='' required onChange={this.onChangeInstrument}>
-              <option value="" disabled selected hidden>instrument</option>
+              <select className='rounded-borders w-100' name="instruments" value={this.state.instrument || 'instruments'} required onChange={this.onChangeInstrument}>
+              <option value="instruments" disabled hidden>instrument</option>
               <option value="guitar">guitar</option>
               <option value="drums">drums</option>
               <option value="bass">bass</option>
@@ -127,12 +127,12 @@ class SignUp extends React.Component {
             </span>
 
             <span className='d-flex'>
-              <select className='rounded-border w-33' name='countries' required onChange={this.onChangeCountry}>
-                <option value="" disabled selected hidden>Country</option>
+              <select className='rounded-border w-33' name='countries' required value={this.state.country || 'country'} onChange={this.onChangeCountry}>
+                <option value="country" disabled hidden>Country</option>
                 <option value="USA">USA</option>
               </select>
-              <select className='rounded-border w-33' name='states' required onChange={this.onChangeState}>
-              <option value="" disabled selected hidden>State</option>
+              <select className='rounded-border w-33' name='states' required value={this.state.state || 'state'} onChange={this.onChangeState}>
+              <option value="state" disabled hidden>State</option>
               <option value="AL">Alabama</option>
               <option value="AK">Alaska</option>
               <option value="AZ">Arizona</option>
@@ -194,7 +194,7 @@ class SignUp extends React.Component {
 
             <input className='rounded-border h-15' type="email" placeholder='email' required value={this.state.email} onChange={this.onChangeEmail}/>
 
-            <button className='purple text-white sans-serif rounded-border h-15' type="submit" onSubmit={this.onSubmit}>LOG IN</button>
+            <button className='purple text-white sans-serif rounded-border h-15' type="submit" onSubmit={this.onSubmit}>SIGN UP</button>
 
           </form>
         </div>
