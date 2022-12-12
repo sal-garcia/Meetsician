@@ -8,7 +8,7 @@ import MusiciansSelected from './pages/mus-selected';
 import Nav from './components/nav';
 import NotFound from './pages/not-found';
 import SignUp from './pages/sign-up';
-import { UserProvider } from './lib/MainContext';
+import { UserProvider, AuthProvider } from './lib/MainContext';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -16,9 +16,16 @@ export default class App extends React.Component {
 
     this.state = {
       route: parseRoute(location.hash),
-      musicians: null
+      musicians: null,
+      user: null
     };
     this.updateMusician = this.updateMusician.bind(this);
+    this.updateUser = this.updateUser.bind(this);
+
+  }
+
+  updateUser(newUser) {
+    this.setState({ user: newUser });
   }
 
   updateMusician(newLocation) {
@@ -31,6 +38,12 @@ export default class App extends React.Component {
       const updatedroute = parseRoute(location.hash);
       this.setState({ route: updatedroute });
     });
+    fetch('/auth/check')
+      .then(res => res.json())
+      .then(data => {
+        // console.log(data);
+        this.updateUser(data.user);
+      });
   }
 
   renderMusicianPages() {
@@ -68,21 +81,29 @@ export default class App extends React.Component {
   render() {
 
     return ( // nav component is inserted here so that it  appears in every other component
-      <div className='container-fluid black text-white'>
-        <Nav />
-        {this.state.route.path.startsWith('musician')
-          ? <UserProvider value={{
-            musicians: this.state.musicians,
-            updateMusician: this.updateMusician
-          }}>
-          {this.renderMusicianPages()}
-        </UserProvider>
-          : <div>
-            {this.renderAppPages()}
-          </div>
-      }
+      <AuthProvider value={{
+        user: this.state.user,
+        updateUser: this.updateUser
+      }}
 
-      </div>
+      >
+        <div className='container-fluid black text-white'>
+          <Nav />
+          {this.state.route.path.startsWith('musician')
+            ? <UserProvider value={{
+              musicians: this.state.musicians,
+              updateMusician: this.updateMusician
+
+            }}>
+              {this.renderMusicianPages()}
+            </UserProvider>
+            : <div>
+              {this.renderAppPages()}
+            </div>
+          }
+
+        </div>
+      </AuthProvider>
     );
   }
 }
