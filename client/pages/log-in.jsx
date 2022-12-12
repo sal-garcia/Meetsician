@@ -1,4 +1,5 @@
 import React from 'react';
+import { AuthContext } from '../lib/MainContext';
 
 class LogIn extends React.Component {
 
@@ -14,6 +15,19 @@ class LogIn extends React.Component {
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    // console.log(this.context, 'login');
+    if (this.context.user) {
+      window.location.assign('/#musician/mus-location');
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.context.user) {
+      window.location.assign('/#musician/mus-location');
+    }
   }
 
   onChangePassword(e) {
@@ -39,12 +53,20 @@ class LogIn extends React.Component {
       })
     })
       .then(res => res.json())
-      .then(data => this.setState({
-        password: '',
-        email: ''
-      }));
+      .then(data => {
+        this.setState({
+          password: '',
+          email: ''
+        });
+        // console.log(data);
+        if (data.error) {
+          alert(data.error);
+        } else {
+          this.context.updateUser(data.user);
+          window.location.assign('/#musician/mus-location');
+        }
+      });
 
-    window.location.assign('/#musician/mus-location');
   }
 
   render() {
@@ -68,5 +90,7 @@ class LogIn extends React.Component {
     );
   }
 }
+
+LogIn.contextType = AuthContext;
 
 export default LogIn;

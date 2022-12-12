@@ -1,5 +1,6 @@
 require('dotenv/config');
 // user authentication
+const cookieParser = require('cookie-parser');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 // user authentication
@@ -18,6 +19,27 @@ if (process.env.NODE_ENV === 'development') {
   app.use(express.static(publicPath));
 }
 
+// cookie middleware
+function checkAuth(req, res, next) {
+  const cookies = req.cookies;
+  // console.log(cookies);
+  if (!cookies.authToken) {
+    res.status(401).json({ error: 'not authorized' });
+    res.end();
+    return (null);
+  }
+  const verified = jwt.verify(cookies.authToken, process.env.TOKEN_SECRET);
+  if (!verified) {
+    res.status(401).json({ error: 'not authorized' });
+    res.end();
+    return (null);
+  }
+  req.user = verified;
+  // console.log(req.user);
+  next();
+}
+// cookie middleware
+app.use(cookieParser());
 app.use(express.json());// json middleware
 
 app.get('/api/users', (req, res, next) => {
@@ -199,7 +221,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
 
    where email = $1;
   `;
-  const param = [email, password];
+  const param = [email];
   // console.log(param, 'param');
   db.query(sql, param)
     .then(result => {
@@ -207,8 +229,9 @@ app.post('/api/auth/sign-in', (req, res, next) => {
       if (!user) {
         throw new ClientError(401, 'invalid login');
       } else {
+        // console.log(user);
         argon2
-          .verify(user.hashedPassword, password)
+          .verify(user.hashed_password, password)
           .then(isMatching => {
             if (!isMatching) {
               throw new ClientError(401, 'invalid login');
@@ -216,9 +239,11 @@ app.post('/api/auth/sign-in', (req, res, next) => {
               const payload = {
                 // userId: user.userId,
                 email,
-                password: user.hashedPassword
+                user_id: user.user_id
+
               };
               const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+              res.cookie('authToken', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
               res.status(200).json({
                 token,
                 user: payload
@@ -229,6 +254,10 @@ app.post('/api/auth/sign-in', (req, res, next) => {
       }
     })
     .catch(err => next(err));
+});
+
+app.get('/auth/check', checkAuth, (req, res, next) => {
+  res.json({ auth: true, user: req.user });
 });
 // user authentication sign in
 
