@@ -68,7 +68,7 @@ class MusLocation extends React.Component {
         { user => (
 
           <div className='d-flex justify-content-center align-items-center text-center h-75'>
-            <div className='flex-column w-25 justify-content-evenly h-75'>
+            <div className='flex-column width-test justify-content-evenly h-75'>
 
               <h1>Where are you looking for musicians?</h1>
 
