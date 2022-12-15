@@ -40,14 +40,11 @@ html {
 }
 
 /* log in page */
-.width-test {
-  width: 25%;
-}
 
 /* phone view */
-@media screen and (max-width: 391px) {
+@media screen and (max-width: 900px) {
   .width-test {
-    width: 50%;
+    width: 100% !important;
   }
 
   .row {
@@ -78,6 +75,10 @@ html {
 
 .w-180px {
   width: 180px;
+}
+
+.width-test {
+  width: 50%;
 }
 
 /* custom width */

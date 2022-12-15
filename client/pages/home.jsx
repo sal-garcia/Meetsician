@@ -20,12 +20,12 @@ export default function Home(props) {
   return (
     <div className='text-center'>
       <h1>Meetsician</h1>
-      <button className='purple text-white sans-serif rounded-border h-15 w-15' onClick={() => signUpClicked()}>Sign Up</button>
+      <button className='purple text-white sans-serif rounded-border h-15 width-test' onClick={() => signUpClicked()}>Sign Up</button>
       <div>
-      <button className='purple text-white sans-serif rounded-border h-15 w-15' onClick={() => logInClicked()}>Log In</button>
+      <button className='purple text-white sans-serif rounded-border h-15 width-test' onClick={() => logInClicked()}>Log In</button>
       </div>
       <div>
-        <button className='black text-white sans-serif rounded-border h-15 w-15 border border-white' onClick={() => guest()}>Sign In As Guest</button>
+        <button className='black text-white sans-serif rounded-border h-15 width-test border border-white' onClick={() => guest()}>Sign In As Guest</button>
       </div>
 
     </div>
