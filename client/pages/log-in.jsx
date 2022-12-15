@@ -18,9 +18,15 @@ class LogIn extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.context, 'login');
+    // console.log(this.context.user, 'login');
     if (this.context.user) {
+
       window.location.assign('/#musician/mus-location');
+      // this.AuthProvider.setState({ logInUrl: 'Log In' });
+      // console.log(this.state);
+    } else {
+      //
+      // console.log(this.state);
     }
   }
 
@@ -58,7 +64,6 @@ class LogIn extends React.Component {
           password: '',
           email: ''
         });
-        // console.log(data);
         if (data.error) {
           alert(data.error);
         } else {
@@ -87,6 +92,7 @@ class LogIn extends React.Component {
           </form>
         </div>
       </div>
+
     );
   }
 }

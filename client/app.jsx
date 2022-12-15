@@ -18,6 +18,7 @@ export default class App extends React.Component {
       route: parseRoute(location.hash),
       musicians: null,
       user: null
+      // logInUrl: 'test'
     };
     this.updateMusician = this.updateMusician.bind(this);
     this.updateUser = this.updateUser.bind(this);
@@ -63,7 +64,7 @@ export default class App extends React.Component {
 
   renderAppPages() {
     const { route } = this.state; // destructuring
-    if (route.path === 'home') {
+    if (route.path === 'home' || route.path === '') {
       return <Home />;
     }
     if (route.path === 'log-in') {
@@ -84,7 +85,11 @@ export default class App extends React.Component {
       <AuthProvider value={{
         user: this.state.user,
         updateUser: this.updateUser
-      }}
+        // logInUrl: this.state.logInUrl
+
+      }
+
+    }
 
       >
         <div className='container-fluid black text-white'>
@@ -93,7 +98,7 @@ export default class App extends React.Component {
             ? <UserProvider value={{
               musicians: this.state.musicians,
               updateMusician: this.updateMusician
-
+              // logInUrl: this.state.logInUrl
             }}>
               {this.renderMusicianPages()}
             </UserProvider>
