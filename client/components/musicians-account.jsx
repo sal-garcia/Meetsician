@@ -56,7 +56,7 @@ function MusiciansAccounts(props) {
     })
       .then(res => res.json())
       .then(data => {
-
+        props.updateAccount(props.index, { likes: newLikes });
       })
       .catch(err => {
         console.error('error:', err);

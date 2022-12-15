@@ -226,10 +226,11 @@ app.post('/api/auth/sign-in', (req, res, next) => {
   db.query(sql, param)
     .then(result => {
       const [user] = result.rows;
+      // console.log(user, 'user');
       if (!user) {
         throw new ClientError(401, 'invalid login');
       } else {
-        // console.log(user);
+        // console.log(user, 'user');
         argon2
           .verify(user.hashed_password, password)
           .then(isMatching => {
