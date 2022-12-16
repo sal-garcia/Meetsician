@@ -15,7 +15,7 @@ CREATE TABLE "users" (
 	"email" TEXT NOT NULL UNIQUE,
 	"hashed_password" TEXT NOT NULL,
 	"photo_url" TEXT NOT NULL,
-	"likes" INT NOT NULL,
+
   "saved" BOOLEAN NOT NULL,
   "created_at" timestamptz NOT NULL default now(),
 	CONSTRAINT "users_pk" PRIMARY KEY ("user_id")
@@ -23,13 +23,12 @@ CREATE TABLE "users" (
   OIDS=FALSE
 );
 
--- CREATE TABLE "comments" (
--- 	"comment_id" serial NOT NULL,
--- 	"comments" TEXT NOT NULL,
--- 	"user_id" integer NOT NULL,
--- 	CONSTRAINT "comments_pk" PRIMARY KEY ("comment_id")
--- ) WITH (
---   OIDS=FALSE
--- );
-
--- ALTER TABLE "comments" ADD CONSTRAINT "comments_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("user_id");
+CREATE TABLE "user_likes" (
+  "id" serial NOT NULL,
+  "likes_user" INT NOT NULL,
+  "liked_by" INT NOT NULL,
+  "created_at" timestamptz NOT NULL default now(),
+	CONSTRAINT "user_likes_pk" PRIMARY KEY ("id"),
+  CONSTRAINT "user_likes_fk1" FOREIGN KEY ("likes_user") REFERENCES "users"("user_id"),
+  CONSTRAINT "user_likes_fk2" FOREIGN KEY ("liked_by") REFERENCES "users"("user_id")
+);

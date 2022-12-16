@@ -8,6 +8,6 @@ const UserConsumer = UserContext.Consumer;
 const AuthContext = React.createContext();
 
 const AuthProvider = AuthContext.Provider;
-const AuthConsumer = AuthContext.Consumer;
+// const AuthConsumer = AuthContext.Consumer;
 
-export { UserProvider, UserConsumer, UserContext, AuthContext, AuthConsumer, AuthProvider };
+export { UserProvider, UserConsumer, UserContext, AuthContext, AuthProvider };

@@ -18,7 +18,6 @@ export default class App extends React.Component {
       route: parseRoute(location.hash),
       musicians: null,
       user: null
-      // logInUrl: 'test'
     };
     this.updateMusician = this.updateMusician.bind(this);
     this.updateUser = this.updateUser.bind(this);
@@ -42,7 +41,6 @@ export default class App extends React.Component {
     fetch('/auth/check')
       .then(res => res.json())
       .then(data => {
-        // console.log(data);
         this.updateUser(data.user);
       });
   }
@@ -85,7 +83,6 @@ export default class App extends React.Component {
       <AuthProvider value={{
         user: this.state.user,
         updateUser: this.updateUser
-        // logInUrl: this.state.logInUrl
 
       }
 
@@ -98,7 +95,6 @@ export default class App extends React.Component {
             ? <UserProvider value={{
               musicians: this.state.musicians,
               updateMusician: this.updateMusician
-              // logInUrl: this.state.logInUrl
             }}>
               {this.renderMusicianPages()}
             </UserProvider>
