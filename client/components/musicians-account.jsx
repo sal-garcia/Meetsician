@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../lib/MainContext';
 import ContactEmail from './contact-email';
 
 function MusiciansAccounts(props) {
+  const authContext = useContext(AuthContext);
   const [showContactEmail, setShowContactEmail] = useState(false);
 
   const ContactButton = param => {
@@ -12,55 +14,60 @@ function MusiciansAccounts(props) {
 
   const likeButton = () => {
     const newLikes = props.likes + 1;
-
-    fetch('/api/user_likes', {
+    if (!authContext.user) {
+      alert('must be logged in');
+      return;
+    }
+    fetch(`/user/${authContext.user.user_id}/likes/${props.user_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: props.name,
-        email: props.email,
-        likes: newLikes
-        // saved: props.saved
+      }
 
-      })
     })
       .then(res => res.json())
       .then(data => {
-
-        props.updateAccount(props.index, { likes: newLikes });
+        if (!data.success) {
+          alert(data.message);
+          return;
+        }
+        props.updateAccount(props.index, { num_likes: newLikes });
+        props.setLikes(newLikes);
       })
       .catch(err => {
         console.error('error:', err);
       });
-    props.setLikes(newLikes);
 
   };
 
   const dislikeButton = () => {
     const newLikes = props.likes - 1;
 
-    fetch('/api/user_dislikes', {
+    if (!authContext.user) {
+      alert('must be logged in');
+      return;
+    }
+    fetch(`/user/${authContext.user.user_id}/dislikes/${props.user_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: props.name,
-        email: props.email,
-        likes: newLikes
-        // saved: props.saved
+      }
 
-      })
     })
       .then(res => res.json())
       .then(data => {
-        props.updateAccount(props.index, { likes: newLikes });
+        if (!data.success) {
+          alert(data.message);
+          return;
+        }
+        props.updateAccount(props.index, { num_likes: newLikes });
+        props.setLikes(newLikes);
       })
+
       .catch(err => {
         console.error('error:', err);
       });
+
   };
 
   const savedButton = () => {

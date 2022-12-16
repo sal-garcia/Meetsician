@@ -18,15 +18,11 @@ class LogIn extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.context.user, 'login');
+
     if (this.context.user) {
 
       window.location.assign('/#musician/mus-location');
-      // this.AuthProvider.setState({ logInUrl: 'Log In' });
-      // console.log(this.state);
-    } else {
-      //
-      // console.log(this.state);
+
     }
   }
 

@@ -31,7 +31,6 @@ class MusLocation extends React.Component {
   }
 
   handleChangeCity(e) {
-
     this.setState({ city: e.target.value.toLowerCase() });
   }
 

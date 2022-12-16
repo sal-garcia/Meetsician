@@ -1,4 +1,5 @@
 import React from 'react';
+import { AuthContext } from '../lib/MainContext';
 
 class SignUp extends React.Component {
   constructor() {
@@ -59,6 +60,21 @@ class SignUp extends React.Component {
 
   onChangeEmail(e) {
     this.setState({ email: e.target.value });
+  }
+
+  componentDidUpdate() {
+    if (this.context.user) {
+      window.location.assign('/#musician/mus-location');
+    }
+  }
+
+  componentDidMount() {
+
+    if (this.context.user) {
+
+      window.location.assign('/#musician/mus-location');
+
+    }
   }
 
   onSubmit(e) {
@@ -202,5 +218,7 @@ class SignUp extends React.Component {
     );
   }
 }
+
+SignUp.contextType = AuthContext;
 
 export default SignUp;

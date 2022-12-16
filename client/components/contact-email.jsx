@@ -3,7 +3,7 @@ function ContactEmail(props) {
 
   return (
     <div>
-      <a href={`mailto:${props.email}`}><button>contact</button></a>
+      <a href={`mailto:${props.email}`}><button className="violet text-light">Send email</button></a>
 
     </div>
   );

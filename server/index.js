@@ -22,20 +22,18 @@ if (process.env.NODE_ENV === 'development') {
 // cookie middleware
 function checkAuth(req, res, next) {
   const cookies = req.cookies;
-  // console.log(cookies);
   if (!cookies.authToken) {
-    res.status(401).json({ error: 'not authorized' });
+    res.status(401).json({ error: 'not authorized', success: false, message: 'not authorized' });
     res.end();
     return (null);
   }
   const verified = jwt.verify(cookies.authToken, process.env.TOKEN_SECRET);
   if (!verified) {
-    res.status(401).json({ error: 'not authorized' });
+    res.status(401).json({ error: 'not authorized', success: false, message: 'not authorized' });
     res.end();
     return (null);
   }
   req.user = verified;
-  // console.log(req.user);
   next();
 }
 // cookie middleware
@@ -48,16 +46,19 @@ app.get('/api/users', (req, res, next) => {
   const state = req.query.state;
   const city = req.query.city;
   const sql = `
-  select *
+
+  select users.*, CAST(count(user_likes.likes_user) as INTEGER) as num_likes
   from
   "users"
+  LEFT JOIN user_likes
+  on user_likes.likes_user = users.user_id
   where
 
   "country" =$1 and
   "state" =$2 and
   "city" =$3
-
-  ORDER BY user_id asc
+  GROUP BY users.user_id
+  ORDER BY users.user_id asc
   `;
 
   const params = [country, state, city];
@@ -76,13 +77,17 @@ app.get('/api/musiciantypes', (req, res, next) => {
   const city = req.query.city;
 
   const sql = `
-  select *
-  from "users"
+  select users.*,  CAST(count(user_likes.likes_user) as INTEGER) as num_likes
+  from
+  "users"
+  LEFT JOIN user_likes
+  on user_likes.likes_user = users.user_id
   where
   "instrument" =$1 and
   "country" =$2 and
   "state" =$3 and
   "city" =$4
+  GROUP BY users.user_id
   ORDER BY user_id asc
   `;
 
@@ -90,48 +95,6 @@ app.get('/api/musiciantypes', (req, res, next) => {
   db.query(sql, params)
     .then(results => {
       res.json(results.rows);
-    })
-    .catch(err => next(err));
-});
-
-// app.post('/api/user_create', (req, res, next) => {
-//   const { name, instrument, country, state, city, about, email, hashedPassword, photoUrl, likes, saved } = req.body;
-
-//   const sql =
-//      `insert into users(name, instrument, country, state, city, about, email, hashed_password, photo_url ,likes,saved)
-//     values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`
-//   ;
-
-//   const params = [name, instrument, country, state, city, about, email, hashedPassword, photoUrl, likes, saved];
-
-//   db.query(sql, params)
-//     .then(results => {
-//       res.json(results.rows);
-//       res.end();
-//     })
-//     .catch(err => next(err));
-
-// });
-
-app.put('/api/user_likes', (req, res, next) => {
-
-  const { likes, name, email } = req.body;
-
-  const sql =
-    `UPDATE "users"
-    SET "likes" = $1
-     WHERE
-  "name" =$2 and
-  "email" =$3
-
-   `;
-
-  const params = [likes, name, email];
-
-  db.query(sql, params)
-    .then(results => {
-      res.json(results.rows);
-      res.end();
     })
     .catch(err => next(err));
 });
@@ -216,21 +179,20 @@ app.post('/api/auth/sign-in', (req, res, next) => {
 
   const sql = `
   select email,
-         hashed_password
+         hashed_password,
+         user_id,
+         name
     from users
 
    where email = $1;
   `;
   const param = [email];
-  // console.log(param, 'param');
   db.query(sql, param)
     .then(result => {
       const [user] = result.rows;
-      // console.log(user, 'user');
       if (!user) {
         throw new ClientError(401, 'invalid login');
       } else {
-        // console.log(user, 'user');
         argon2
           .verify(user.hashed_password, password)
           .then(isMatching => {
@@ -238,11 +200,13 @@ app.post('/api/auth/sign-in', (req, res, next) => {
               throw new ClientError(401, 'invalid login');
             } else {
               const payload = {
-                // userId: user.userId,
+
                 email,
-                user_id: user.user_id
+                user_id: user.user_id,
+                name: user.name
 
               };
+
               const token = jwt.sign(payload, process.env.TOKEN_SECRET);
               res.cookie('authToken', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
               res.status(200).json({
@@ -261,6 +225,71 @@ app.get('/auth/check', checkAuth, (req, res, next) => {
   res.json({ auth: true, user: req.user });
 });
 // user authentication sign in
+
+app.post('/auth/sign-out', (req, res, next) => {
+  res.clearCookie('authToken');
+  res.json({ auth: null, message: 'logged out' });
+});
+
+app.put('/user/:user1Id/likes/:user2Id', checkAuth, async (req, res, next) => {
+  const query1 = `
+ SELECT COUNT(likes_user)
+ FROM user_likes
+ WHERE liked_by = $2 and likes_user = $1
+ `;
+  const query1Params = [req.params.user2Id, req.params.user1Id];
+  const query1Results = await db.query(query1, query1Params);
+  const numbLikes = parseInt(query1Results.rows[0].count);
+  if (numbLikes > 0) {
+    res.status(400).json({ message: 'cant like user more than once', success: false });
+    res.end();
+    return;
+  }
+
+  const sql = `
+    INSERT INTO user_likes(likes_user,liked_by)
+    VALUES($1,$2)
+   `;
+  const params = [req.params.user2Id, req.params.user1Id];
+  await db.query(sql, params);
+  res.json({ message: 'liked user', success: true });
+});
+
+app.put('/user/:user1Id/dislikes/:user2Id', async (req, res, next) => {
+  const query1 = `
+ SELECT COUNT(likes_user)
+ FROM user_likes
+ WHERE liked_by = $2 and likes_user = $1
+ `;
+  const query1Params = [req.params.user2Id, req.params.user1Id];
+  const query1Results = await db.query(query1, query1Params);
+  const numbLikes = parseInt(query1Results.rows[0].count);
+  if (numbLikes < 1) {
+    res.status(400).json({ message: 'cant dislike user', success: false });
+    res.end();
+    return;
+  }
+
+  const sql = `
+    DELETE FROM user_likes
+ WHERE liked_by = $2 and likes_user = $1
+   `;
+  const params = [req.params.user2Id, req.params.user1Id];
+  await db.query(sql, params);
+  res.json({ message: 'disliked user', success: true });
+});
+
+app.get('/user/:user1Id/likes', async (req, res, next) => {
+  const sql = `
+  SELECT COUNT(likes_user)
+  FROM user_likes
+  WHERE likes_user = $1
+
+ `;
+  const params = [req.params.user1Id];
+  const queryResults = await db.query(sql, params);
+  res.json(queryResults.rows);
+});
 
 app.use(ErrorMiddleware);
 
