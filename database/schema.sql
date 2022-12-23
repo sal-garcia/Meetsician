@@ -8,6 +8,7 @@ CREATE TABLE "users" (
 	"user_id" serial NOT NULL,
 	"name" TEXT NOT NULL,
 	"instrument" TEXT NOT NULL,
+  "likes" TEXT NOT NULL,
 	"country" TEXT NOT NULL,
 	"state" TEXT NOT NULL,
 	"city" TEXT NOT NULL,
